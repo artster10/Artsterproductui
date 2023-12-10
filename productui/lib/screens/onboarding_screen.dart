@@ -4,6 +4,8 @@ import 'package:productui/config/colors.dart';
 import 'package:productui/onboarding/widgets/background.dart';
 import 'dart:math' as math;
 
+import 'package:productui/screens/nav/nav.dart';
+
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -67,7 +69,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             Expanded(
                 child: GestureDetector(
-              onTap: () {},
+              onTap: () =>Navigator.push(context, MaterialPageRoute(builder: (context) => const Nav(),),),
               child: Stack(
                 children: [
                   Positioned(
