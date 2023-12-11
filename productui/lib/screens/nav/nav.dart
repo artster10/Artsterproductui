@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:productui/config/colors.dart';
+import 'package:productui/screens/home/home_screen.dart';
 import 'package:productui/screens/widgets/custom_button.dart';
 
 class Nav extends StatefulWidget {
@@ -13,11 +14,7 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   final _pages = [
-    Center(
-      child: Container(
-        child: Text('Home'),
-      ),
-    ),
+    HomeScreen(),
     Text('Message'),
     Text('Fav list'),
     Text('Profile')
