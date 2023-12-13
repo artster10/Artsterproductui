@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:productui/config/colors.dart';
 import 'package:productui/screens/home/home_screen.dart';
+import 'package:productui/screens/orders/order_screen.dart';
 import 'package:productui/screens/profile/profile_screen.dart';
 import 'package:productui/screens/widgets/custom_button.dart';
 import 'package:productui/screens/message/message_screen.dart';
@@ -18,7 +19,7 @@ class _NavState extends State<Nav> {
   final _pages = [
     HomeScreen(),
     MessageScreen(),
-    Text('Fav list'),
+    OrderScreen(),
     ProfileScreen()
   ];
 
