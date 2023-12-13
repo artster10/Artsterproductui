@@ -4,6 +4,7 @@ import 'package:productui/config/colors.dart';
 import 'package:productui/screens/home/home_screen.dart';
 import 'package:productui/screens/profile/profile_screen.dart';
 import 'package:productui/screens/widgets/custom_button.dart';
+import 'package:productui/screens/message/message_screen.dart';
 
 class Nav extends StatefulWidget {
   const Nav({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   final _pages = [
     HomeScreen(),
-    Text('Message'),
+    MessageScreen(),
     Text('Fav list'),
     ProfileScreen()
   ];
@@ -32,64 +33,68 @@ class _NavState extends State<Nav> {
         index: _selectedIndex,
         children: _pages,
       ),
-      floatingActionButton: CustomButton(
-        child: SvgPicture.asset('assets/icons/plus.svg'),
-        onTap: () {},
-      ),
+      floatingActionButton: _selectedIndex == 1
+          ? null
+          : CustomButton(
+              child: SvgPicture.asset('assets/icons/plus.svg'),
+              onTap: () {},
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: Container(
-        height: 80,
-        width: double.infinity,
-        alignment: Alignment.topCenter,
-        padding: EdgeInsets.only(top: 19.0),
-        decoration: BoxDecoration(
-            color: Colors.greenAccent,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 15.0,
-                offset: const Offset(0, 4),
-                color: kBlack.withOpacity(0.15),
-              )
-            ]),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            GestureDetector(
-              onTap: () => _changePageto(0),
-              child: SvgPicture.asset(
-                'assets/icons/home.svg',
-                color: _selectedIndex == 0 ? kSelectedTabColor : null,
+      bottomNavigationBar: _selectedIndex == 1
+          ? null
+          : Container(
+              height: 80,
+              width: double.infinity,
+              alignment: Alignment.topCenter,
+              padding: EdgeInsets.only(top: 19.0),
+              decoration: BoxDecoration(
+                  color: Colors.greenAccent,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 15.0,
+                      offset: const Offset(0, 4),
+                      color: kBlack.withOpacity(0.15),
+                    )
+                  ]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: () => _changePageto(0),
+                    child: SvgPicture.asset(
+                      'assets/icons/home.svg',
+                      color: _selectedIndex == 0 ? kSelectedTabColor : null,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _changePageto(1),
+                    child: SvgPicture.asset(
+                      'assets/icons/message.svg',
+                      color: _selectedIndex == 1 ? kSelectedTabColor : null,
+                    ),
+                  ),
+                  const SizedBox(),
+                  GestureDetector(
+                    onTap: () => _changePageto(2),
+                    child: SvgPicture.asset(
+                      'assets/icons/favorite_border.svg',
+                      color: _selectedIndex == 2 ? kSelectedTabColor : null,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _changePageto(3),
+                    child: SvgPicture.asset(
+                      'assets/icons/profile.svg',
+                      color: _selectedIndex == 3 ? kSelectedTabColor : null,
+                    ),
+                  ),
+                ],
               ),
             ),
-            GestureDetector(
-              onTap: () => _changePageto(1),
-              child: SvgPicture.asset(
-                'assets/icons/message.svg',
-                color: _selectedIndex == 1 ? kSelectedTabColor : null,
-              ),
-            ),
-            const SizedBox(),
-            GestureDetector(
-              onTap: () => _changePageto(2),
-              child: SvgPicture.asset(
-                'assets/icons/favorite_border.svg',
-                color: _selectedIndex == 2 ? kSelectedTabColor : null,
-              ),
-            ),
-            GestureDetector(
-              onTap: () => _changePageto(3),
-              child: SvgPicture.asset(
-                'assets/icons/profile.svg',
-                color: _selectedIndex == 3 ? kSelectedTabColor : null,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
