@@ -45,20 +45,21 @@ class OrderItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall!
-                          .copyWith(color: kBlack),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
+                    Container(
+                      width: size.width / 4.8,
+                      child: Text(
+                        name,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: kBlack, fontWeight: FontWeight.w600),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Text(
                       price,
                       style: Theme.of(context)
                           .textTheme
-                          .labelSmall!
+                          .labelLarge!
                           .copyWith(color: kBlack),
                     ),
                   ],
@@ -70,8 +71,8 @@ class OrderItem extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Align(
                       alignment: Alignment.topRight,

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:productui/config/colors.dart';
 import 'package:productui/screens/home/home_screen.dart';
 import 'package:productui/screens/orders/order_screen.dart';
+import 'package:productui/screens/product_videos/Product_videos.dart';
 import 'package:productui/screens/profile/profile_screen.dart';
 import 'package:productui/screens/widgets/custom_button.dart';
 import 'package:productui/screens/message/message_screen.dart';
@@ -38,7 +39,13 @@ class _NavState extends State<Nav> {
           ? null
           : CustomButton(
               child: SvgPicture.asset('assets/icons/plus.svg'),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductVideos(),
+                    ));
+              },
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: _selectedIndex == 1
@@ -82,7 +89,9 @@ class _NavState extends State<Nav> {
                   GestureDetector(
                     onTap: () => _changePageto(2),
                     child: SvgPicture.asset(
-                      'assets/icons/favorite_border.svg',
+                      'assets/icons/cart-svgrepo-com (1).svg',
+                      height: 24,
+                      width: 24,
                       color: _selectedIndex == 2 ? kSelectedTabColor : null,
                     ),
                   ),
