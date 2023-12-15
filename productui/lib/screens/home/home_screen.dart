@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:productui/screens/home/widgets/background.dart';
 import 'package:productui/config/colors.dart';
+import 'package:productui/screens/product_details/product_details.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
           title: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              'Socially',
+              'Artster',
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.only(right: 16.0),
               child: IconButton(
                 onPressed: () {},
-                icon: SvgPicture.asset('assets/icons/notif.svg'),
+                icon: SvgPicture.asset('assets/icons/search.svg'),
               ),
             ),
           ],
@@ -102,86 +103,97 @@ class HomeScreen extends StatelessWidget {
                 itemCount: 2,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 24.0,
-                      vertical: 32.0,
-                    ),
-                    padding: const EdgeInsets.all(14.0),
-                    height: size.height * 0.40,
-                    width: size.width,
-                    decoration: BoxDecoration(
-                      // color: Colors.red,
-                      borderRadius: BorderRadius.circular(20.0),
-                      image: DecorationImage(
-                        image: AssetImage(
-                            'assets/images/building-${index + 1}.jpg'),
-                        fit: BoxFit.cover,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetails(),
+                          ));
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 24.0,
+                        vertical: 32.0,
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Row(
-                              children: [
-                                const CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                      'assets/images/profile_image.jpg'),
-                                  maxRadius: 16.0,
-                                ),
-                                const SizedBox(width: 8.0),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Dennis Reynolds',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall!
-                                          .copyWith(color: kWhite),
-                                    ),
-                                    Text(
-                                      '2 hrs ago',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge!
-                                          .copyWith(
-                                              color: const Color(0xFFD8D8D8)),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.more_vert, color: kWhite),
-                            ),
-                          ],
+                      padding: const EdgeInsets.all(14.0),
+                      height: size.height * 0.40,
+                      width: size.width,
+                      decoration: BoxDecoration(
+                        // color: Colors.red,
+                        borderRadius: BorderRadius.circular(20.0),
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/images/building-${index + 1}.jpg'),
+                          fit: BoxFit.cover,
                         ),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            _buildPostStat(
-                              context: context,
-                              iconPath: 'assets/icons/favorite_border.svg',
-                              value: '5.2K',
-                            ),
-                            _buildPostStat(
-                              context: context,
-                              iconPath: 'assets/icons/favorite_border.svg',
-                              value: '1.1K',
-                            ),
-                            _buildPostStat(
-                              context: context,
-                              iconPath: 'assets/icons/favorite_border.svg',
-                              value: '5.2K',
-                            ),
-                          ],
-                        )
-                      ],
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  const CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                        'assets/images/profile_image.jpg'),
+                                    maxRadius: 16.0,
+                                  ),
+                                  const SizedBox(width: 8.0),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Dennis Reynolds',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .copyWith(color: kWhite),
+                                      ),
+                                      Text(
+                                        '2 hrs ago',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge!
+                                            .copyWith(
+                                                color: const Color(0xFFD8D8D8)),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () {},
+                                icon:
+                                    const Icon(Icons.more_vert, color: kWhite),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          //   children: [
+                          //     _buildPostStat(
+                          //       context: context,
+                          //       iconPath: 'assets/icons/favorite_border.svg',
+                          //       value: '5.2K',
+                          //     ),
+                          //     _buildPostStat(
+                          //       context: context,
+                          //       iconPath: 'assets/icons/favorite_border.svg',
+                          //       value: '1.1K',
+                          //     ),
+                          //     _buildPostStat(
+                          //       context: context,
+                          //       iconPath: 'assets/icons/favorite_border.svg',
+                          //       value: '5.2K',
+                          //     ),
+                          //   ],
+                          // )
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -193,34 +205,34 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Container _buildPostStat({
-    required BuildContext context,
-    required String iconPath,
-    required String value,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 4.0,
-      ),
-      decoration: BoxDecoration(
-        color: const Color(0xFFE5E5E5).withOpacity(0.40),
-        borderRadius: BorderRadius.circular(35.0),
-      ),
-      child: Row(
-        children: [
-          SvgPicture.asset(
-            iconPath,
-            color: kWhite,
-          ),
-          const SizedBox(width: 8.0),
-          Text(
-            value,
-            style:
-                Theme.of(context).textTheme.labelSmall!.copyWith(color: kWhite),
-          ),
-        ],
-      ),
-    );
-  }
+//   Container _buildPostStat({
+//     required BuildContext context,
+//     required String iconPath,
+//     required String value,
+//   }) {
+//     return Container(
+//       padding: const EdgeInsets.symmetric(
+//         horizontal: 8.0,
+//         vertical: 4.0,
+//       ),
+//       decoration: BoxDecoration(
+//         color: const Color(0xFFE5E5E5).withOpacity(0.40),
+//         borderRadius: BorderRadius.circular(35.0),
+//       ),
+//       child: Row(
+//         children: [
+//           SvgPicture.asset(
+//             iconPath,
+//             color: kWhite,
+//           ),
+//           const SizedBox(width: 8.0),
+//           Text(
+//             value,
+//             style:
+//                 Theme.of(context).textTheme.labelSmall!.copyWith(color: kWhite),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
 }
