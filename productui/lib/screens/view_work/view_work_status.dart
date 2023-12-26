@@ -62,6 +62,8 @@ class _ViewWorkStatusState extends State<ViewWorkStatus> {
     try {
       SharedPreferences sh = await SharedPreferences.getInstance();
       String urls = sh.getString('url').toString();
+      String lid =sh.getString('lid').toString();
+      String aid =sh.getString('aid').toString();
       String url = '$urls/myapp/send_request/';
 
       var data = await http.post(Uri.parse(url), body: {});
