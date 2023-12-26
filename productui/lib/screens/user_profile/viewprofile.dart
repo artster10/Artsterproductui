@@ -18,7 +18,6 @@ class ViewProfile extends StatelessWidget {
     return MaterialApp(
       title: 'View Profile',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -37,21 +36,18 @@ class ViewProfilePage extends StatefulWidget {
 }
 
 class _ViewProfilePageState extends State<ViewProfilePage> {
-
-  _ViewProfilePageState()
-  {
+  _ViewProfilePageState() {
     _send_data();
   }
   @override
   Widget build(BuildContext context) {
-
-
-
     return WillPopScope(
-      onWillPop: () async{ return true; },
+      onWillPop: () async {
+        return true;
+      },
       child: Scaffold(
         appBar: AppBar(
-          leading: BackButton( ),
+          leading: BackButton(),
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Text(widget.title),
         ),
@@ -59,45 +55,94 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-
-
-              CircleAvatar(radius: 50,),
+              CircleAvatar(
+                radius: 50,
+              ),
               Column(
                 children: [
-                  Image(image: NetworkImage(photo_),height: 200,width: 200,),
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                  child: Text(sname_),
+                  Image(
+                    image: NetworkImage(photo_),
+                    height: 200,
+                    width: 200,
                   ),
                   Padding(
                     padding: EdgeInsets.all(5),
-                    child: Text(fname_),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('First name'),
+                        Text(fname_),
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(5),
-                    child: Text(gender_),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Second name'),
+                        Text(sname_),
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(5),
-                    child: Text(dob_),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Gender'),
+                        Text(gender_),
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(5),
-                    child: Text(email_),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Dob'),
+                        Text(dob_),
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(5),
-                    child: Text(phone_),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('E-mail'),
+                        Text(email_),
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(5),
-                    child: Text(password_),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Phone'),
+                        Text(phone_),
+                      ],
+                    ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Text(confirmpassword_),
-                  ),
-
+                  // Padding(
+                  //   padding: EdgeInsets.all(5),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Text(password_),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: EdgeInsets.all(5),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Text(confirmpassword_),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
               // ElevatedButton(
@@ -107,7 +152,6 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
               //   },
               //   child: Text("Edit Profile"),
               // ),
-
             ],
           ),
         ),
@@ -115,74 +159,51 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
     );
   }
 
+  String fname_ = "";
+  String sname_ = "";
+  String dob_ = "";
+  String gender_ = "";
+  String email_ = "";
+  String phone_ = "";
+  // String password_ = "";
+  // String confirmpassword_ = "";
+  String photo_ = "";
 
-  String fname_="";
-  String sname_="";
-  String dob_="";
-  String gender_="";
-  String email_="";
-  String phone_="";
-  String password_="";
-  String confirmpassword_="";
-  String photo_="";
-
-  void _send_data() async{
-
-
-
+  void _send_data() async {
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
     String lid = sh.getString('lid').toString();
 
     final urls = Uri.parse('$url/myapp/view_profile/');
     try {
-      final response = await http.post(urls, body: {
-      'lid':lid
-
-
-
-      });
+      final response = await http.post(urls, body: {'lid': lid});
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
-        if (status=='ok') {
-          String name=jsonDecode(response.body)['name'];
-          String dob=jsonDecode(response.body)['dob'];
-          String gender=jsonDecode(response.body)['gender'];
-          String email=jsonDecode(response.body)['email'];
-          String phone=jsonDecode(response.body)['phone'];
-          String place=jsonDecode(response.body)['place'];
-          String post=jsonDecode(response.body)['post'];
-          String pin=jsonDecode(response.body)['pin'];
-          String district=jsonDecode(response.body)['district'];
-          String photo=url+jsonDecode(response.body)['photo'];
+        if (status == 'ok') {
+          String fname = jsonDecode(response.body)['first name'];
+          String sname = jsonDecode(response.body)['second name'];
+          String dob = jsonDecode(response.body)['dob'];
+          String gender = jsonDecode(response.body)['gender'];
+          String email = jsonDecode(response.body)['email'];
+          String phone = jsonDecode(response.body)['phone'];
+          String photo = url + jsonDecode(response.body)['photo'];
 
           setState(() {
-
-            name_= name;
-            dob_= dob;
-            gender_= gender;
-            email_= email;
-            phone_= phone;
-            place_= place;
-            post_= post;
-            pin_= pin;
-            district_= district;
-            photo_= photo;
+            fname_ = fname;
+            sname_ = sname;
+            dob_ = dob;
+            gender_ = gender;
+            email_ = email;
+            phone_ = phone;
+            photo_ = photo;
           });
-
-
-
-
-
-        }else {
+        } else {
           Fluttertoast.showToast(msg: 'Not Found');
         }
-      }
-      else {
+      } else {
         Fluttertoast.showToast(msg: 'Network Error');
       }
-    }
-    catch (e){
+    } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
     }
   }

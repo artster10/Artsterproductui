@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    // firstly, we need to create a backround
+
     return Background(
       child: Scaffold(
         backgroundColor: Colors.transparent,
