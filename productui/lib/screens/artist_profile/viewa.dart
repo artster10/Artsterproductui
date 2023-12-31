@@ -156,6 +156,20 @@ class _ViewArtistState extends State<ViewArtist> {
                                   ],
                                 ),
                               ),
+                              Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                      },
+                                      child: Text("Send Work"),
+                                    ),
+                                    Text(category_[index]),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                           // ElevatedButton(

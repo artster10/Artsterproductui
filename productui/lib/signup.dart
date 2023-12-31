@@ -7,11 +7,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:productui/screens/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart ';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'login.dart';
+import 'user_home.dart';
 
 
 void main() {
@@ -30,21 +32,21 @@ class MyMySignup extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyMySignupPage(title: 'MySignup'),
+      home: const MysignupPage(title: 'MySignup'),
     );
   }
 }
 
-class MyMySignupPage extends StatefulWidget {
-  const MyMySignupPage({super.key, required this.title});
+class MysignupPage extends StatefulWidget {
+  const MysignupPage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyMySignupPage> createState() => _MyMySignupPageState();
+  State<MysignupPage> createState() => _MysignupPageState();
 }
 
-class _MyMySignupPageState extends State<MyMySignupPage> {
+class _MysignupPageState extends State<MysignupPage> {
 
   String gender = "Male";
   File? uploadimage;
@@ -190,19 +192,19 @@ class _MyMySignupPageState extends State<MyMySignupPage> {
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
 
-    final urls = Uri.parse('$url/myapp/and_signup_post/');
+    final urls = Uri.parse('$url/and_signup_post/');
     try {
 
       final response = await http.post(urls, body: {
         "fileField":photo,
-        "textField":fname,
+        "textfield":fname,
         "textfield2":sname,
         "textfield3":Dob,
         "textfield4":mobno,
         "textfield5":email,
         "textfield6":password,
         "textfield8":confirmpassword,
-        "gender":gender,
+        "gen":gender,
 
 
       });
@@ -212,7 +214,7 @@ class _MyMySignupPageState extends State<MyMySignupPage> {
 
           Fluttertoast.showToast(msg: 'Registration Successfull');
           Navigator.push(context, MaterialPageRoute(
-            builder: (context) => MyLoginPage(title: "Login"),));
+            builder: (context) => UserHomePage(title: "",),));
         }else {
           Fluttertoast.showToast(msg: 'Not Found');
         }

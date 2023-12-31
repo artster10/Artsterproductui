@@ -43,26 +43,30 @@ class _ViewWorkStatusState extends State<ViewWorkStatus> {
     view_notification();
   }
 
-  List<String> ARTIST_ = <String>[];
   List<String> USER_ = <String>[];
   List<String> date_ = <String>[];
+  List<String> delivery_id_= <String>[];
+  List<String> artist_id_ = <String>[];
+  List<String> place_ = <String>[];
+  List<String> amount_ = <String>[];
   List<String> status_ = <String>[];
-  List<String> description_ = <String>[];
 
 
 
   Future<void> view_notification() async {
-    List<String> ARTIST = <String>[];
     List<String> USER = <String>[];
     List<String> date = <String>[];
+    List<String> delivery_id= <String>[];
+    List<String> artist_id = <String>[];
+    List<String> place = <String>[];
+    List<String> amount = <String>[];
     List<String> status = <String>[];
-    List<String> description = <String>[];
 
 
     try {
       SharedPreferences sh = await SharedPreferences.getInstance();
       String urls = sh.getString('url').toString();
-      String url = '$urls/myapp/send_request/';
+      String url = '$urls/myapp/delivery_status/';
 
       var data = await http.post(Uri.parse(url), body: {});
       var jsondata = json.decode(data.body);
@@ -73,11 +77,13 @@ class _ViewWorkStatusState extends State<ViewWorkStatus> {
       print(arr.length);
 
       for (int i = 0; i < arr.length; i++) {
-        ARTIST.add(arr[i]['ARTIST'].toString());
-        USER.add(arr[i]['USER']);
+        USER.add(arr[i]['USER'].toString());
         date.add(arr[i]['date']);
+        delivery_id.add(arr[i]['delivery_id']);
+        artist_id.add(arr[i]['artist_id']);
+        place.add(arr[i]['place']);
+        amount.add(arr[i]['amount']);
         status.add(arr[i]['status']);
-
 
       }
 
@@ -137,8 +143,8 @@ class _ViewWorkStatusState extends State<ViewWorkStatus> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Artist name'),
-                                    Text(ARTIST_[index]),
+                                    Text('User name'),
+                                    Text(USER_[index]),
                                   ],
                                 ),
                               ),
@@ -147,8 +153,18 @@ class _ViewWorkStatusState extends State<ViewWorkStatus> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('User name'),
-                                    Text(USER_[index]),
+                                    Text('Artist id'),
+                                    Text(artist_id_[index]),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Delivery id'),
+                                    Text(delivery_id_[index]),
                                   ],
                                 ),
                               ),
@@ -168,8 +184,8 @@ class _ViewWorkStatusState extends State<ViewWorkStatus> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Status'),
-                                    Text(status_[index]),
+                                    Text('place'),
+                                    Text(place_[index]),
                                   ],
                                 ),
                               ),
@@ -178,8 +194,18 @@ class _ViewWorkStatusState extends State<ViewWorkStatus> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text('Description'),
-                                    Text(description_[index]),
+                                    Text('Amount'),
+                                    Text(amount_[index]),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('status'),
+                                    Text(status_[index]),
                                     
                                   ],
                                 ),

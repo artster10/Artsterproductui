@@ -9,6 +9,8 @@ import 'package:productui/screens/home/home_screen.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'signup.dart';
+
 // import 'home_drawer.dart';
 
 void main() {
@@ -82,12 +84,19 @@ class _MyLoginPageState extends State<MyLoginPage> {
 
               ElevatedButton(
                 onPressed: () {
+                  _send_data();
 
 
                 
 
                 },
                 child: Text("Login"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MysignupPage(title: "",),));
+                },
+                child: Text("signup"),
               ),
               // TextButton(
               //   onPressed: () {
@@ -117,7 +126,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
 
-    final urls = Uri.parse('$url/myapp/and_login_post/');
+    final urls = Uri.parse('$url/and_login_post/');
     try {
       final response = await http.post(urls, body: {
         'textfield':uname,
@@ -129,8 +138,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
         String status = jsonDecode(response.body)['status'];
         if (status=='ok') {
 
-          String lid=jsonDecode(response.body)['lid'];
-          sh.setString("lid", lid);
+          String id=jsonDecode(response.body)['id'];
+          sh.setString("id", id);
 
           Navigator.push(context, MaterialPageRoute(
             builder: (context) => HomeScreen(),));
