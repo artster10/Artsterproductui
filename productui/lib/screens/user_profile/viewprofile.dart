@@ -173,20 +173,24 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
     String lid = sh.getString('lid').toString();
+    String img_url = sh.getString('img_url').toString();
 
-    final urls = Uri.parse('$url/myapp/view_profile/');
+    final urls = Uri.parse('$url/view_profile/');
     try {
-      final response = await http.post(urls, body: {'lid': lid});
+      final response = await http.post(urls, body: {
+        'lid': lid
+
+      });
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
         if (status == 'ok') {
-          String fname = jsonDecode(response.body)['first name'];
-          String sname = jsonDecode(response.body)['second name'];
-          String dob = jsonDecode(response.body)['dob'];
+          String fname = jsonDecode(response.body)['fname'];
+          String sname = jsonDecode(response.body)['sname'];
+          String dob = jsonDecode(response.body)['dateofbirth'];
           String gender = jsonDecode(response.body)['gender'];
           String email = jsonDecode(response.body)['email'];
-          String phone = jsonDecode(response.body)['phone'];
-          String photo = url + jsonDecode(response.body)['photo'];
+          String phone = jsonDecode(response.body)['mobno'];
+          String photo = img_url + jsonDecode(response.body)['img'];
 
           setState(() {
             fname_ = fname;

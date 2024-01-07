@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:productui/loading.dart';
 import 'package:productui/screens/home/home_screen.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -94,7 +95,7 @@ class _MyLoginPageState extends State<MyLoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MysignupPage(title: "",),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Loading(),));
                 },
                 child: Text("signup"),
               ),
@@ -138,12 +139,13 @@ class _MyLoginPageState extends State<MyLoginPage> {
         String status = jsonDecode(response.body)['status'];
         if (status=='ok') {
 
-          String id=jsonDecode(response.body)['id'];
-          sh.setString("id", id);
-
+          String id=jsonDecode(response.body)['lid'].toString();
+          String type=jsonDecode(response.body)['type'];
+          sh.setString("lid", id);
+          if (type=='user'){
           Navigator.push(context, MaterialPageRoute(
-            builder: (context) => HomeScreen(),));
-        }else {
+            builder: (context) => Loading(),));
+        }}else {
           Fluttertoast.showToast(msg: 'Not Found');
         }
       }
