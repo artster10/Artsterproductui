@@ -1,27 +1,19 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:productui/DeliveryBoy/view_delivery_prof_new.dart';
 import 'package:productui/screens/user_profile/viewprofile.dart';
 import 'package:productui/screens/view_work/view_work.dart';
 import 'package:productui/view_complaintmain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
-// import 'package:smart_parking2/user/user_changepassword.dart';
-// import 'package:smart_parking2/user/view_book.dart';
-// import 'package:smart_parking2/user/view_complaint.dart';
-// import 'package:smart_parking2/user/view_near_parking.dart';
-// import 'package:smart_parking2/user/view_parking_location.dart';
+
 import 'dart:convert';
 
-import 'changepassword.dart';
-import 'complaint.dart';
-import 'feedback.dart';
-//
-// import 'package:smart_parking2/user/view_prof_new.dart';
-// import 'package:smart_parking2/user/view_slot.dart';
-//
-// import 'Loginmain.dart';
+import '../delivery/deliveryboyprofile.dart';
+
+
 
 
 
@@ -38,28 +30,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Clean',
+      title: 'Artster',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const UserHomePage(title: 'Register'),
+      home: const deliveryboyHomePage(title: 'Artster'),
     );
   }
 }
 
-class UserHomePage extends StatefulWidget {
-  const UserHomePage({super.key, required this.title});
+class deliveryboyHomePage extends StatefulWidget {
+  const deliveryboyHomePage({super.key, required this.title});
 
 
   final String title;
 
   @override
-  State<UserHomePage> createState() => _UserHomePageState();
+  State<deliveryboyHomePage> createState() => _deliveryboyHomePageState();
 }
 
-class _UserHomePageState extends State<UserHomePage> {
+class _deliveryboyHomePageState extends State<deliveryboyHomePage> {
   String photo='';
   String name='';
   String type='';
@@ -97,7 +89,7 @@ class _UserHomePageState extends State<UserHomePage> {
     return WillPopScope(
 
       onWillPop: () async{
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>UserHomePage (title: '',),));
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>deliveryboyHomePage (title: '',),));
 
         return false;
 
@@ -218,53 +210,10 @@ class _UserHomePageState extends State<UserHomePage> {
                 title: const Text(' Profile  '),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewProfilePage(title: '',),)
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => deliveryViewProfilefull(title: '',),)
                   );
                 },
-              ), ListTile(
-                leading: Icon(Icons.password),
-                title: const Text('  change password  '),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePassword(title: '',),)
-                  );
-                },
-              ),
-
-
-
-
-
-
-
-
-
-
-
-              ListTile(
-                leading: Icon(Icons.report_problem),
-                title: const Text('Complaint'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyComplaint(title: "",),));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.feedback),
-                title: const Text('Feedback'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage(title: "",),));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.feedback),
-                title: const Text('Complaint View'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewComplaintPage(title: "",),));
-                },
-              ),
+              ), 
 
               ListTile(
                 leading: Icon(Icons.work),
@@ -274,39 +223,7 @@ class _UserHomePageState extends State<UserHomePage> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ViewSession(title: '')));
                 },
               ),
-   // ListTile(
-   //              leading: Icon(Icons.near_me),
-   //              title: const Text(' Nearest Parking'),
-   //              onTap: () {
-   //                Navigator.pop(context);
-   //                Navigator.push(context, MaterialPageRoute(builder: (context) => view_near_parking_full(title: "",),));
-   //              },
-   //            ),
-   //
-   //
-   //
-   //            ListTile(
-   //              leading: Icon(Icons.change_circle),
-   //              title: const Text(' Change Password '),
-   //              onTap: () {
-   //                Navigator.pop(context);
-   //                Navigator.push(context, MaterialPageRoute(builder: (context) => MyUserChangePassword(),));
-   //              },
-   //            ),
-   //
-   //            ListTile(
-   //              leading: Icon(Icons.logout),
-   //              title: const Text('LogOut'),
-   //              onTap: () {
-   //
-   //                Navigator.push(context, MaterialPageRoute(builder: (context) => login_new_full(),));
-   //              },
-   //            ),
-
-
-
-
-
+   // 
 
 
 

@@ -10,7 +10,11 @@ import 'package:productui/screens/home/home_screen.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'DeliveryBoy/delivery_home.dart';
 import 'signup.dart';
+
+
+
 
 // import 'home_drawer.dart';
 
@@ -95,10 +99,11 @@ class _MyLoginPageState extends State<MyLoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Loading(),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyMySignup(),));
                 },
                 child: Text("signup"),
               ),
+
               // TextButton(
               //   onPressed: () {
               //     Navigator.push(
@@ -145,7 +150,17 @@ class _MyLoginPageState extends State<MyLoginPage> {
           if (type=='user'){
           Navigator.push(context, MaterialPageRoute(
             builder: (context) => Loading(),));
-        }}else {
+
+        }
+          else if (type=='deliveryboy'){
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => deliveryboyHomePage(title: 'Delivery Home',),));
+
+          }
+
+
+
+        }else {
           Fluttertoast.showToast(msg: 'Not Found');
         }
       }
