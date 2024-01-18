@@ -80,7 +80,7 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Second name'),
+                        Text('Second '),
                         Text(sname_),
                       ],
                     ),

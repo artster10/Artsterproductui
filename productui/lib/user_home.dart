@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:productui/screens/user_profile/userprofilenew.dart';
 import 'package:productui/screens/user_profile/viewprofile.dart';
 import 'package:productui/screens/view_work/view_work.dart';
 import 'package:productui/view_complaintmain.dart';
@@ -218,7 +219,7 @@ class _UserHomePageState extends State<UserHomePage> {
                 title: const Text(' Profile  '),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewProfilePage(title: '',),)
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile(),)
                   );
                 },
               ), ListTile(
