@@ -4,9 +4,14 @@ import 'package:productui/config/colors.dart';
 import 'package:productui/screens/product_details/widgets/product_details_background.dart';
 import 'package:productui/screens/nav/nav.dart';
 
-class ProductDetails extends StatelessWidget {
+class ProductDetails extends StatefulWidget {
   const ProductDetails({super.key});
 
+  @override
+  State<ProductDetails> createState() => _ProductDetailsState();
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:productui/screens/user_profile/userprofilenew.dart';
 import 'package:productui/screens/user_profile/viewprofile.dart';
+import 'package:productui/screens/view_product/product.dart';
 import 'package:productui/screens/view_work/view_work.dart';
 import 'package:productui/view_complaintmain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -272,7 +273,7 @@ class _UserHomePageState extends State<UserHomePage> {
                 title: const Text('View work '),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewSession(title: '')));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ProductPage()));
                 },
               ),
    // ListTile(
