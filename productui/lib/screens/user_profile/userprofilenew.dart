@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:productui/loading.dart';
+import 'package:productui/screens/user_profile/editprofile.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,13 +48,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
         return true;
       },
       child: Scaffold(
-
+        backgroundColor: Colors.grey.shade200,
         body:SingleChildScrollView(
           child: Stack(
+
             children: [
 
               Container(
-                margin: EdgeInsets.fromLTRB(16.0, 140.0, 16.0, 16.0),
+                margin: EdgeInsets.fromLTRB(10.0, 140.0, 10.0, 1.0),
                 child: Column(
                   children: [
                     Stack(
@@ -129,17 +131,20 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ),
                           Divider(),
                           ListTile(
-                            title: Text("Location"),
-                            subtitle: Text('$sname_'),
-                            leading: Icon(Icons.place),
+                            title: Text("Username"),
+                            subtitle: Text('$fname_ $sname_'),
+                            leading: Icon(Icons.person_2_rounded),
                           ),
-
-
 
                           ListTile(
                             title: Text("Gender"),
                             subtitle: Text('$gender_'),
                             leading: Icon(Icons.male_sharp),
+                          ),
+                          ListTile(
+                            title: Text("DOB"),
+                            subtitle: Text('$dob_'),
+                            leading: Icon(Icons.cake_rounded),
                           ),
                           ListTile(
                             title: Text('Email'),
@@ -156,15 +161,22 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           SizedBox(
                             height: 10,
                           ),
+
                         ],
                       ),
-                    )
-                  ],
+                    ), SizedBox(height: 20),
+                   ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => MyEdit(),));
+                      },
+                      child: Text("Edit Profile"),
+                    ), ],
                 ),
               ),
+
               Positioned(
-                top: 60,
-                left: 20,
+                top: 30,
+                left: 5,
                 child: MaterialButton(
                   minWidth: 0.2,
                   elevation: 0.2,
@@ -183,8 +195,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   },
                 ),
               ),
+
             ],
+
           ),
+
         ),
       ),
     );
@@ -216,13 +231,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
         if (status == 'ok') {
-          String fname = jsonDecode(response.body)['fname'];
-          String sname = jsonDecode(response.body)['sname'];
-          String dob = jsonDecode(response.body)['dateofbirth'];
-          String gender = jsonDecode(response.body)['gender'];
-          String email = jsonDecode(response.body)['email'];
-          String phone = jsonDecode(response.body)['mobno'];
-          String photo = img_url + jsonDecode(response.body)['img'];
+          String fname = jsonDecode(response.body)['fname'].toString();
+          String sname = jsonDecode(response.body)['sname'].toString();
+          String dob = jsonDecode(response.body)['dateofbirth'].toString();
+          String gender = jsonDecode(response.body)['gender'].toString();
+          String email = jsonDecode(response.body)['email'].toString();
+          String phone = jsonDecode(response.body)['mobno'].toString();
+          String photo = img_url + jsonDecode(response.body)['img'].toString();
 
           setState(() {
             fname_ = fname;

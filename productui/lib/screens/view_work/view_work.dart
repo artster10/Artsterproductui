@@ -147,6 +147,7 @@ class _ViewSessionState extends State<ViewSession> {
                 image: AssetImage('assets/'), fit: BoxFit.cover),
           ),
           child: ListView.builder(
+
             physics: BouncingScrollPhysics(),
             // padding: EdgeInsets.all(5.0),
             // shrinkWrap: true,
@@ -174,10 +175,11 @@ class _ViewSessionState extends State<ViewSession> {
                             return Builder(
                               builder: (BuildContext context) {
                                 return Container(
-                        
+
                                     width: MediaQuery.of(context).size.width,
                                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                                     decoration: BoxDecoration(
+
                                         color: Colors.amber
                                     ),
                                     child:VideoPlayerWidget(videoUrl: video_[index],),
