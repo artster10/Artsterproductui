@@ -236,7 +236,7 @@ class _ProductPageState extends State<ProductPage> {
                                   CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Dennis Reynolds',
+                                      'Dennis Reynold',
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall!
