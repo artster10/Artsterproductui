@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -15,7 +13,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'login.dart';
 import 'user_home.dart';
 
-
 void main() {
   runApp(const MyMySignup());
 }
@@ -28,7 +25,6 @@ class MyMySignup extends StatelessWidget {
     return MaterialApp(
       title: 'MySignup',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -47,21 +43,15 @@ class MysignupPage extends StatefulWidget {
 }
 
 class _MysignupPageState extends State<MysignupPage> {
-
   String gender = "Male";
   File? uploadimage;
-  TextEditingController fnameController= new TextEditingController();
-  TextEditingController snameController= new TextEditingController();
+  TextEditingController fnameController = new TextEditingController();
+  TextEditingController snameController = new TextEditingController();
   TextEditingController dateController = new TextEditingController();
   TextEditingController mobnoController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   TextEditingController confirmpasswordController = new TextEditingController();
-
- 
-
-
-
 
   // Future<void> chooseImage() async {
   //   // final choosedimage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -71,14 +61,12 @@ class _MysignupPageState extends State<MysignupPage> {
   //   });
   // }
 
-
-
-
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
-      onWillPop: () async{ return true; },
+      onWillPop: () async {
+        return true;
+      },
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -90,8 +78,10 @@ class _MysignupPageState extends State<MysignupPage> {
             children: <Widget>[
               if (_selectedImage != null) ...{
                 InkWell(
-                  child:
-                  Image.file(_selectedImage!, height: 400,),
+                  child: Image.file(
+                    _selectedImage!,
+                    height: 400,
+                  ),
                   radius: 399,
                   onTap: _checkPermissionAndChooseImage,
                   // borderRadius: BorderRadius.all(Radius.circular(200)),
@@ -100,10 +90,15 @@ class _MysignupPageState extends State<MysignupPage> {
                 // Image(image: NetworkImage(),height: 100, width: 70,fit: BoxFit.cover,),
                 InkWell(
                   onTap: _checkPermissionAndChooseImage,
-                  child:Column(
+                  child: Column(
                     children: [
-                      Image(image: NetworkImage('https://cdn.pixabay.com/photo/2017/11/10/05/24/select-2935439_1280.png'),height: 200,width: 200,),
-                      Text('Select Image',style: TextStyle(color: Colors.cyan))
+                      Image(
+                        image: NetworkImage(
+                            'https://cdn.pixabay.com/photo/2017/11/10/05/24/select-2935439_1280.png'),
+                        height: 200,
+                        width: 200,
+                      ),
+                      Text('Select Image', style: TextStyle(color: Colors.cyan))
                     ],
                   ),
                 ),
@@ -112,61 +107,96 @@ class _MysignupPageState extends State<MysignupPage> {
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: fnameController,
-                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("First Name")),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), label: Text("First Name")),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: snameController,
-                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("Second Name")),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), label: Text("Second Name")),
                 ),
               ),
-              RadioListTile(value: "Male", groupValue: gender, onChanged: (value) { setState(() {gender="Male";}); },title: Text("Male"),),
-              RadioListTile(value: "Female", groupValue: gender, onChanged: (value) { setState(() {gender="Female";}); },title: Text("Female"),),
-              RadioListTile(value: "Other", groupValue: gender, onChanged: (value) { setState(() {gender="Other";}); },title: Text("Other"),),
+              RadioListTile(
+                value: "Male",
+                groupValue: gender,
+                onChanged: (value) {
+                  setState(() {
+                    gender = "Male";
+                  });
+                },
+                title: Text("Male"),
+              ),
+              RadioListTile(
+                value: "Female",
+                groupValue: gender,
+                onChanged: (value) {
+                  setState(() {
+                    gender = "Female";
+                  });
+                },
+                title: Text("Female"),
+              ),
+              RadioListTile(
+                value: "Other",
+                groupValue: gender,
+                onChanged: (value) {
+                  setState(() {
+                    gender = "Other";
+                  });
+                },
+                title: Text("Other"),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: dateController,
-                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("DOB")),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), label: Text("DOB")),
                 ),
-              ),   Padding(
+              ),
+              Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: mobnoController,
-                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("Phone")),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), label: Text("Phone")),
                 ),
-              ),   Padding(
+              ),
+              Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: emailController,
-                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("E-mail")),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), label: Text("E-mail")),
                 ),
-              ),   Padding(
+              ),
+              Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: passwordController,
-                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("Password")),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), label: Text("Password")),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: confirmpasswordController,
-                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("Confirm Password")),
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      label: Text("Confirm Password")),
                 ),
               ),
-
-
               ElevatedButton(
                 onPressed: () {
-
-                 _send_data() ;
-
+                  _send_data();
                 },
                 child: Text("Signup"),
-              ),TextButton(
+              ),
+              TextButton(
                 onPressed: () {},
                 child: Text("Login"),
               ),
@@ -176,57 +206,54 @@ class _MysignupPageState extends State<MysignupPage> {
       ),
     );
   }
-  void _send_data() async{
 
-    String fname=fnameController.text;
-    String sname=snameController.text;
-    String Dob=dateController.text;
-    String mobno=mobnoController.text;
-    String email=emailController.text;
-    String password=passwordController.text;
-    String confirmpassword=confirmpasswordController.text;
-
-   
-
+  void _send_data() async {
+    String fname = fnameController.text;
+    String sname = snameController.text;
+    String Dob = dateController.text;
+    String mobno = mobnoController.text;
+    String email = emailController.text;
+    String password = passwordController.text;
+    String confirmpassword = confirmpasswordController.text;
 
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
 
     final urls = Uri.parse('$url/and_signup_post/');
     try {
-
       final response = await http.post(urls, body: {
-        "fileField":photo,
-        "textfield":fname,
-        "textfield2":sname,
-        "textfield3":Dob,
-        "textfield4":mobno,
-        "textfield5":email,
-        "textfield6":password,
-        "textfield8":confirmpassword,
-        "gen":gender,
-
-
+        "fileField": photo,
+        "textfield": fname,
+        "textfield2": sname,
+        "textfield3": Dob,
+        "textfield4": mobno,
+        "textfield5": email,
+        "textfield6": password,
+        "textfield8": confirmpassword,
+        "gen": gender,
       });
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
-        if (status=='ok') {
-
+        if (status == 'ok') {
           Fluttertoast.showToast(msg: 'Registration Successfull');
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => UserHomePage(title: "",),));
-        }else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserHomePage(
+                  title: "",
+                ),
+              ));
+        } else {
           Fluttertoast.showToast(msg: 'Not Found');
         }
-      }
-      else {
+      } else {
         Fluttertoast.showToast(msg: 'Network Error');
       }
-    }
-    catch (e){
+    } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
     }
   }
+
   File? _selectedImage;
   String? _encodedImage;
   Future<void> _chooseAndUploadImage() async {
@@ -266,5 +293,4 @@ class _MysignupPageState extends State<MysignupPage> {
   }
 
   String photo = '';
-
 }
