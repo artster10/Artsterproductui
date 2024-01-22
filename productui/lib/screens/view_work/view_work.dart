@@ -9,7 +9,7 @@ import 'package:productui/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 // import 'package:yogapose_and_zumba/home.dart';
-import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+// import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -162,33 +162,33 @@ class _ViewSessionState extends State<ViewSession> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
-                      Card(
-                        child: FlutterCarousel(
-                          options: CarouselOptions(
-                            height: 400.0,
-                            showIndicator: true,
-                            slideIndicator: CircularSlideIndicator(
-                              
-                            ),
-                          ),
-                          items: [1,2].map((i) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return Container(
-
-                                    width: MediaQuery.of(context).size.width,
-                                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                    decoration: BoxDecoration(
-
-                                        color: Colors.amber
-                                    ),
-                                    child:VideoPlayerWidget(videoUrl: video_[index],),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                      // Card(
+                      //   child: FlutterCarousel(
+                      //     options: CarouselOptions(
+                      //       height: 400.0,
+                      //       showIndicator: true,
+                      //       slideIndicator: CircularSlideIndicator(
+                      //
+                      //       ),
+                      //     ),
+                      //     items: [1,2].map((i) {
+                      //       return Builder(
+                      //         builder: (BuildContext context) {
+                      //           return Container(
+                      //
+                      //               width: MediaQuery.of(context).size.width,
+                      //               margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      //               decoration: BoxDecoration(
+                      //
+                      //                   color: Colors.amber
+                      //               ),
+                      //               child:VideoPlayerWidget(videoUrl: video_[index],),
+                      //           );
+                      //         },
+                      //       );
+                      //     }).toList(),
+                      //   ),
+                      // ),
 
                       Card(
 

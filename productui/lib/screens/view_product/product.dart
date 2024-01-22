@@ -191,11 +191,11 @@ class _ProductPageState extends State<ProductPage> {
 
 
                     SharedPreferences sh = await SharedPreferences.getInstance();
-                    sh.setString("img", images_[index]);
-                    sh.setString("name", pname_[index]);
-                    sh.setString("description", pinfo_[index]);
-                    sh.setString("price", price_[index]);
-                    sh.setString("video", video_[index]);
+                    sh.setString("pid", id_[index]);
+                    // sh.setString("name", pname_[index]);
+                    // sh.setString("description", pinfo_[index]);
+                    // sh.setString("price", price_[index]);
+                    // sh.setString("video", video_[index]);
 
                     Navigator.push(
                         context,
