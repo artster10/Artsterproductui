@@ -31,6 +31,10 @@ class _ProductPageState extends State<ProductPage> {
   List<String> images_ = <String>[];
   List<String> pinfo_ = <String>[];
 
+  List<String> firstname_ = <String>[];
+  List<String> secondname_ = <String>[];
+  List<String> img_ = <String>[];
+
   Future<void> view_notification() async {
     List<String> id = <String>[];
     List<String> pname = <String>[];
@@ -38,6 +42,9 @@ class _ProductPageState extends State<ProductPage> {
     List<String> price = <String>[];
     List<String> images = <String>[];
     List<String> video = <String>[];
+    List<String> firstname = <String>[];
+    List<String> secondname = <String>[];
+    List<String> img = <String>[];
 
     try {
       SharedPreferences sh = await SharedPreferences.getInstance();
@@ -59,6 +66,9 @@ class _ProductPageState extends State<ProductPage> {
         pinfo.add(arr[i]['pinfo']);
         video.add(sh.getString("img_url").toString() + arr[i]['video']);
         price.add(arr[i]['price']);
+        firstname.add(arr[i]['firstname']);
+        secondname.add(arr[i]['secondname']);
+        img.add(sh.getString('img_url').toString() + arr[i]['img']);
       }
 
       setState(() {
@@ -68,6 +78,9 @@ class _ProductPageState extends State<ProductPage> {
         pname_ = pname;
         pinfo_ = pinfo;
         price_ = price;
+        firstname_ = firstname;
+        secondname_ = secondname;
+        img_ = img;
       });
 
       print(statuss);
@@ -213,9 +226,8 @@ class _ProductPageState extends State<ProductPage> {
                             children: [
                               Row(
                                 children: [
-                                  const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        'assets/images/profile_image.jpg'),
+                                  CircleAvatar(
+                                    backgroundImage: NetworkImage(img_[index]),
                                     maxRadius: 16.0,
                                   ),
                                   const SizedBox(width: 8.0),
@@ -224,11 +236,13 @@ class _ProductPageState extends State<ProductPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Dennis Reynold',
+                                        firstname_[index] +
+                                            ' ' +
+                                            secondname_[index],
                                         style: Theme.of(context)
                                             .textTheme
-                                            .labelSmall!
-                                            .copyWith(color: kWhite),
+                                            .bodyLarge!
+                                            .copyWith(color: kBlack),
                                       ),
                                       Text(
                                         '2 hrs ago',
