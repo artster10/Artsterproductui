@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:productui/product_info/product_info.dart';
 import 'package:productui/screens/home/home_screen.dart';
+import 'package:productui/screens/profile/profile_screen.dart';
 import 'package:productui/screens/view_product/bg.dart';
 import 'package:productui/user_home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/colors.dart';
+import '../artist_profile/viewa.dart';
 import '../product_details/product_details.dart';
 
 class ProductPage extends StatefulWidget {
@@ -35,6 +37,8 @@ class _ProductPageState extends State<ProductPage> {
   List<String> secondname_ = <String>[];
   List<String> img_ = <String>[];
 
+  List<String> aid_ = <String>[];
+
   Future<void> view_notification() async {
     List<String> id = <String>[];
     List<String> pname = <String>[];
@@ -45,6 +49,7 @@ class _ProductPageState extends State<ProductPage> {
     List<String> firstname = <String>[];
     List<String> secondname = <String>[];
     List<String> img = <String>[];
+    List<String> aid = <String>[];
 
     try {
       SharedPreferences sh = await SharedPreferences.getInstance();
@@ -69,6 +74,7 @@ class _ProductPageState extends State<ProductPage> {
         firstname.add(arr[i]['firstname']);
         secondname.add(arr[i]['secondname']);
         img.add(sh.getString('img_url').toString() + arr[i]['img']);
+        aid.add(arr[i]['aid'].toString());
       }
 
       setState(() {
@@ -81,6 +87,7 @@ class _ProductPageState extends State<ProductPage> {
         firstname_ = firstname;
         secondname_ = secondname;
         img_ = img;
+        aid_ = aid;
       });
 
       print(statuss);
@@ -193,6 +200,7 @@ class _ProductPageState extends State<ProductPage> {
                       SharedPreferences sh =
                           await SharedPreferences.getInstance();
                       sh.setString("pid", id_[index]);
+                      sh.setString("aid", aid_[index]);
                       // sh.setString("name", pname_[index]);
                       // sh.setString("description", pinfo_[index]);
                       // sh.setString("price", price_[index]);
@@ -224,37 +232,52 @@ class _ProductPageState extends State<ProductPage> {
                         children: [
                           Row(
                             children: [
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: NetworkImage(img_[index]),
-                                    maxRadius: 16.0,
-                                  ),
-                                  const SizedBox(width: 8.0),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        firstname_[index] +
-                                            ' ' +
-                                            secondname_[index],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(color: kBlack),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProfileScreen()),
+                                        );
+                                      },
+                                      child: CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(img_[index]),
+                                        maxRadius: 20.0,
                                       ),
-                                      Text(
-                                        '2 hrs ago',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge!
-                                            .copyWith(
-                                                color: const Color(0xFFD8D8D8)),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                    const SizedBox(width: 8.0),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          firstname_[index] +
+                                              ' ' +
+                                              secondname_[index],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(color: kBlack),
+                                        ),
+                                        Text(
+                                          '2 hrs ago',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge!
+                                              .copyWith(
+                                                  color:
+                                                      const Color(0xFFD8D8D8)),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                               const Spacer(),
                               IconButton(
