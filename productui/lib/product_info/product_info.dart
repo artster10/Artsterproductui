@@ -239,7 +239,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:productui/loading.dart';
-import 'package:productui/screens/orders/order_screen.dart';
 import 'package:productui/screens/orders/widgets/order_screen_background.dart';
 import 'package:productui/screens/view_product/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -341,23 +340,7 @@ class _ProductInfoState extends State<ProductInfo> {
           child: Column(
             children: [
               CarouselSlider(
-                items:[
-                  Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 24.0,
-                    vertical: 32.0,
-                  ),
-                  padding: const EdgeInsets.all(14.0),
-                  height: size.height * 0.40,
-                  width: size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    image: DecorationImage(
-                      image: NetworkImage(pimage_),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                items: [
                   Container(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 24.0,
@@ -368,22 +351,26 @@ class _ProductInfoState extends State<ProductInfo> {
                     width: size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.0),
-
-                    ),child:VideoPlayerWidget(videoUrl: pvideo_),
+                      image: DecorationImage(
+                        image: NetworkImage(pimage_),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-
+                  Container(
+                    child: VideoPlayerWidget(videoUrl: pvideo_),
+                  ),
                 ],
                 options: CarouselOptions(
-                height: size.height * 0.40,
-
-                enlargeCenterPage: true,
-                autoPlay: true,
-                aspectRatio: 16 / 9,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enableInfiniteScroll: true,
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                viewportFraction: 0.8,
-              ),
+                  height: size.height * 0.40,
+                  enlargeCenterPage: true,
+                  autoPlay: false,
+                  aspectRatio: 16 / 9,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enableInfiniteScroll: true,
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  viewportFraction: 0.8,
+                ),
               ),
               Column(
                 children: [
@@ -439,7 +426,6 @@ class _ProductInfoState extends State<ProductInfo> {
               SizedBox(
                 height: 30,
               ),
-
             ],
           ),
         ),
@@ -471,10 +457,11 @@ class _ProductInfoState extends State<ProductInfo> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: ElevatedButton(
-                      onPressed: () {
-
-                      },
-                      child: Icon(Icons.shopping_cart_rounded,color: Colors.black54,),
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.shopping_cart_rounded,
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                 ),
@@ -488,10 +475,13 @@ class _ProductInfoState extends State<ProductInfo> {
                     alignment: Alignment.topLeft,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Loading()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Loading()));
                       },
-                      child: Icon(Icons.shopping_bag_rounded,
-                      color: Colors.teal[300],),
+                      child: Icon(
+                        Icons.shopping_bag_rounded,
+                        color: Colors.teal[300],
+                      ),
                     ),
                   ),
                 ),
@@ -515,7 +505,6 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController _controller;
-
   bool isVideoPlaying = false;
 
   @override
@@ -546,10 +535,14 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: VideoPlayer(_controller),
-          ),
+          ClipRRect(
+              borderRadius: BorderRadius.circular(16.0),
+              child: AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: SizedBox(
+                      width: _controller.value.size.width,
+                      height: _controller.value.size.height,
+                      child: VideoPlayer(_controller)))),
           if (!isVideoPlaying)
             Icon(
               Icons.play_arrow,
