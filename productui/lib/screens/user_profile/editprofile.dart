@@ -1,4 +1,3 @@
-// import 'package:clinicpharma/viewprofile.dart';
 
 import 'dart:io';
 
@@ -7,11 +6,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:productui/screens/user_profile/viewprofile.dart';
+import 'package:productui/screens/user_profile/userprofilenew.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart ';
 
 import 'package:permission_handler/permission_handler.dart';
+
 
 void main() {
   runApp(const MyEdit());
@@ -25,6 +25,7 @@ class MyEdit extends StatelessWidget {
     return MaterialApp(
       title: 'Edit Profile',
       theme: ThemeData(
+
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -43,62 +44,83 @@ class MyEditPage extends StatefulWidget {
 }
 
 class _MyEditPageState extends State<MyEditPage> {
-  _MyEditPageState() {
+
+  _MyEditPageState()
+  {
     _get_data();
   }
 
   String gender = "Male";
-  TextEditingController fnameController = new TextEditingController();
-  TextEditingController snameController = new TextEditingController();
-  TextEditingController dobController = new TextEditingController();
+  File? uploadimage;
+  TextEditingController fnameController= new TextEditingController();
+  TextEditingController snameController= new TextEditingController();
+  TextEditingController dateController = new TextEditingController();
+  TextEditingController mobnoController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
-  TextEditingController phoneController = new TextEditingController();
 
-  void _get_data() async {
+
+  void _get_data() async{
+
+
+
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
     String lid = sh.getString('lid').toString();
+    String img_url = sh.getString('img_url').toString();
 
-    final urls = Uri.parse('$url/myapp/user_viewprofile/');
+    final urls = Uri.parse('$url/view_profile/');
     try {
-      final response = await http.post(urls, body: {'lid': lid});
+      final response = await http.post(urls, body: {
+        'lid':lid
+
+      });
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
-        if (status == 'ok') {
-          String fname = jsonDecode(response.body)['First name'];
-          String sname = jsonDecode(response.body)['Second name'];
-          String dob = jsonDecode(response.body)['dob'];
-          String gender = jsonDecode(response.body)['gender'];
-          String email = jsonDecode(response.body)['email'];
-          String phone = jsonDecode(response.body)['phone'];
-          // String place=jsonDecode(response.body)['place'];
-          // String post=jsonDecode(response.body)['post'];
-          // String pin=jsonDecode(response.body)['pin'];
-          // String district=jsonDecode(response.body)['district'];
-          String photo = jsonDecode(response.body)['photo'];
+        if (status=='ok') {
+          String fname=jsonDecode(response.body)['fname'].toString();
+          String sname=jsonDecode(response.body)['sname'].toString();
+          String dob=jsonDecode(response.body)['dateofbirth'].toString();
+          String gender=jsonDecode(response.body)['gen'].toString();
+          String email=jsonDecode(response.body)['email'].toString();
+          String mobno=jsonDecode(response.body)['mobno'].toString();
+          String photo = img_url + jsonDecode(response.body)['img'];
+          print(photo+"helloo");
 
-          fnameController.text = fname;
-          snameController.text = sname;
-          dobController.text = dob;
-          emailController.text = email;
-          phoneController.text = phone;
-        } else {
+          setState(() {
+            gender = gender;
+            photo = photo;
+          });
+          // String photo=jsonDecode(response.body)['fileField'];
+
+
+          fnameController.text=fname;
+          snameController.text=sname;
+          dateController.text=dob;
+          emailController.text=email;
+          mobnoController.text=mobno;
+
+
+        }else {
           Fluttertoast.showToast(msg: 'Not Found');
         }
-      } else {
+      }
+      else {
         Fluttertoast.showToast(msg: 'Network Error');
       }
-    } catch (e) {
+    }
+    catch (e){
       Fluttertoast.showToast(msg: e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
+
+
+
+
     return WillPopScope(
-      onWillPop: () async {
-        return true;
-      },
+      onWillPop: () async{ return true; },
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -108,12 +130,11 @@ class _MyEditPageState extends State<MyEditPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+
               if (_selectedImage != null) ...{
                 InkWell(
-                  child: Image.file(
-                    _selectedImage!,
-                    height: 400,
-                  ),
+                  child:
+                  Image.file(_selectedImage!, height: 400,),
                   radius: 399,
                   onTap: _checkPermissionAndChooseImage,
                   // borderRadius: BorderRadius.all(Radius.circular(200)),
@@ -122,18 +143,10 @@ class _MyEditPageState extends State<MyEditPage> {
                 // Image(image: NetworkImage(),height: 100, width: 70,fit: BoxFit.cover,),
                 InkWell(
                   onTap: _checkPermissionAndChooseImage,
-                  child: Column(
+                  child:Column(
                     children: [
-                      Image(
-                        image: NetworkImage(
-                            'https://cdn.pixabay.com/photo/2017/11/10/05/24/select-2935439_1280.png'),
-                        height: 200,
-                        width: 200,
-                      ),
-                      Text(
-                        'Select Image',
-                        style: TextStyle(color: Colors.cyan),
-                      )
+                      Image(image: NetworkImage(photo),height: 200,width: 200,),
+                      Text('Select Image',style: TextStyle(color: Colors.cyan))
                     ],
                   ),
                 ),
@@ -143,66 +156,45 @@ class _MyEditPageState extends State<MyEditPage> {
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: fnameController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("Name")),
+                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("FirstName")),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: snameController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("Name")),
+                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("SecondName")),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
-                  controller: dobController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("DoB")),
+                  controller: dateController,
+                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("DoB")),
                 ),
               ),
-              RadioListTile(
-                value: "Male",
-                groupValue: gender,
-                onChanged: (value) {
-                  setState(() {
-                    gender = "Male";
-                  });
-                },
-                title: Text("Male"),
-              ),
-              RadioListTile(
-                value: "Female",
-                groupValue: gender,
-                onChanged: (value) {
-                  setState(() {
-                    gender = "Female";
-                  });
-                },
-                title: Text("Female"),
-              ),
-              // RadioListTile(value: "Other", groupValue: gender, onChanged: (value) { setState(() {gender="Other";}); },title: Text("Other"),),
+              RadioListTile(value: "Male", groupValue: gender, onChanged: (value) { setState(() {gender="Male";}); },title: Text("Male"),),
+              RadioListTile(value: "Female", groupValue: gender, onChanged: (value) { setState(() {gender="Female";}); },title: Text("Female"),),
+              RadioListTile(value: "Other", groupValue: gender, onChanged: (value) { setState(() {gender="Other";}); },title: Text("Other"),),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
                   controller: emailController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("Email")),
+                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("Email")),
                 ),
-              ),
-              Padding(
+              ),   Padding(
                 padding: const EdgeInsets.all(8),
                 child: TextField(
-                  controller: phoneController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("Phone")),
+                  controller: mobnoController,
+                  decoration: InputDecoration(border: OutlineInputBorder(),label: Text("Phone")),
                 ),
               ),
+
+
               ElevatedButton(
                 onPressed: () {
                   _send_data();
+
                 },
                 child: Text("Confirm Edit"),
               ),
@@ -212,54 +204,57 @@ class _MyEditPageState extends State<MyEditPage> {
       ),
     );
   }
+  void _send_data() async{
 
-  void _send_data() async {
-    String fname = fnameController.text;
-    String sname = snameController.text;
-    String dob = dobController.text;
-    String email = emailController.text;
-    String phone = phoneController.text;
-    // String place=placeController.text;
-    // String post=postController.text;
-    // String pin=pinController.text;
-    // String district=districtController.text;
+
+
+
+
+    String fname=fnameController.text;
+    String sname=snameController.text;
+    String dob=dateController.text;
+    String email=emailController.text;
+    String phone=mobnoController.text;
+
+
 
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
     String lid = sh.getString('lid').toString();
 
-    final urls = Uri.parse('$url/myapp/user_editprofile/');
+    final urls = Uri.parse('$url/user_edit_profile/');
     try {
+
       final response = await http.post(urls, body: {
-        "photo": photo,
-        'first name': fname,
-        'second name': sname,
-        'dob': dob,
-        'gender': gender,
-        'email': email,
-        'phone': phone,
-        'lid': lid,
+        "fileField":photo,
+        'textfield':fname,
+        'textfield2':sname,
+        'textfield3':dob,
+        'gen':gender,
+        'textfield5':email,
+        'textfield4':phone,
+        'lid':lid,
+
       });
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
-        if (status == 'ok') {
+        if (status=='ok') {
+
           Fluttertoast.showToast(msg: 'Updated Successfully');
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ViewProfilePage(title: "Profile"),
-              ));
-        } else {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => UserProfile(),));
+        }else {
           Fluttertoast.showToast(msg: 'Not Found');
         }
-      } else {
+      }
+      else {
         Fluttertoast.showToast(msg: 'Network Error');
       }
-    } catch (e) {
+    }
+    catch (e){
       Fluttertoast.showToast(msg: e.toString());
     }
   }
-
   File? _selectedImage;
   String? _encodedImage;
   Future<void> _chooseAndUploadImage() async {
@@ -299,4 +294,5 @@ class _MyEditPageState extends State<MyEditPage> {
   }
 
   String photo = '';
+
 }

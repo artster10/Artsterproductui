@@ -1,90 +1,61 @@
-
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:productui/loading.dart';
+import 'package:productui/screens/user_profile/editprofile.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
-// import 'dart:convert';
-
-import 'delivery_home.dart';
-
-
-
+// import 'editprofile.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(const UserProfile());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class UserProfile extends StatelessWidget {
+  const UserProfile({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '',
+      title: 'View Profile',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home:  (title: 'Sent Complaint'),
+      home: const UserProfilePage(title: 'View Profile'),
     );
   }
 }
 
-
-class deliveryViewProfilefull extends StatefulWidget {
-  const deliveryViewProfilefull({super.key, required this.title});
-
+class UserProfilePage extends StatefulWidget {
+  const UserProfilePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<deliveryViewProfilefull> createState() => _deliveryViewProfilefullState();
+  State<UserProfilePage> createState() => _UserProfilePageState();
 }
-class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+
+class _UserProfilePageState extends State<UserProfilePage> {
+  _UserProfilePageState() {
     _send_data();
   }
-
-
-
-  // String name='name';
-  // String email='email';
-  // String phone='phone';
-  //
-  // String age='age';
-  // String gender='gender';
-  // String image='image';
-  // String place='place';
-  // String post='post';
-  // String pin='pin';
-
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async{
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>deliveryboyHomePage (title: '',),));
-
-        return false;
-
+      onWillPop: () async {
+        return true;
       },
       child: Scaffold(
-        backgroundColor: Colors.grey.shade900,
-        body: SingleChildScrollView(
+        backgroundColor: Colors.grey.shade200,
+        body:SingleChildScrollView(
           child: Stack(
+
             children: [
 
               Container(
-                margin: EdgeInsets.fromLTRB(16.0, 240.0, 16.0, 16.0),
+                margin: EdgeInsets.fromLTRB(10.0, 140.0, 10.0, 1.0),
                 child: Column(
                   children: [
                     Stack(
@@ -111,7 +82,7 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                                         MainAxisAlignment.start,
                                         children: [
                                           Text(
-                                            ' $name_',
+                                            ' $fname_',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline6,
@@ -140,8 +111,8 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.0),
                               image:  DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/db.jpeg'),
+                                  image: NetworkImage('$photo_'
+                                      ),
                                   fit: BoxFit.cover)),
                           margin: EdgeInsets.only(left: 20.0),
                         ),
@@ -160,17 +131,20 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                           ),
                           Divider(),
                           ListTile(
-                            title: Text("Location"),
-                            subtitle: Text('$location_'),
-                            leading: Icon(Icons.place),
+                            title: Text("Username"),
+                            subtitle: Text('$fname_ $sname_'),
+                            leading: Icon(Icons.person_2_rounded),
                           ),
-
-
 
                           ListTile(
                             title: Text("Gender"),
                             subtitle: Text('$gender_'),
                             leading: Icon(Icons.male_sharp),
+                          ),
+                          ListTile(
+                            title: Text("DOB"),
+                            subtitle: Text('$dob_'),
+                            leading: Icon(Icons.cake_rounded),
                           ),
                           ListTile(
                             title: Text('Email'),
@@ -187,15 +161,22 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                           SizedBox(
                             height: 10,
                           ),
+
                         ],
                       ),
-                    )
-                  ],
+                    ), SizedBox(height: 20),
+                   ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => MyEdit(),));
+                      },
+                      child: Text("Edit Profile"),
+                    ), ],
                 ),
               ),
+
               Positioned(
-                top: 60,
-                left: 20,
+                top: 30,
+                left: 5,
                 child: MaterialButton(
                   minWidth: 0.2,
                   elevation: 0.2,
@@ -207,34 +188,41 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                   ),
                   onPressed: () {
 
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>deliveryboyHomePage (title: '',),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>Loading (),));
 
 
 
                   },
                 ),
               ),
+
             ],
+
           ),
+
         ),
       ),
     );
   }
 
 
-  String name_ = "";
-  String location_ = "";
+  String fname_ = "";
+  String sname_ = "";
+  String dob_ = "";
   String gender_ = "";
   String email_ = "";
   String phone_ = "";
   // String password_ = "";
   // String confirmpassword_ = "";
+  String photo_ = "";
 
   void _send_data() async {
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
     String lid = sh.getString('lid').toString();
-    final urls = Uri.parse('$url/and_deliveryboy/');
+    String img_url = sh.getString('img_url').toString();
+
+    final urls = Uri.parse('$url/view_profile/');
     try {
       final response = await http.post(urls, body: {
         'lid': lid
@@ -243,20 +231,22 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
         if (status == 'ok') {
-          String name = jsonDecode(response.body)['name'];
-          String location = jsonDecode(response.body)['location'];
-          String gender = jsonDecode(response.body)['gender'];
-
-          String email = jsonDecode(response.body)['email'];
-          String phone = jsonDecode(response.body)['mobno'];
+          String fname = jsonDecode(response.body)['fname'].toString();
+          String sname = jsonDecode(response.body)['sname'].toString();
+          String dob = jsonDecode(response.body)['dateofbirth'].toString();
+          String gender = jsonDecode(response.body)['gender'].toString();
+          String email = jsonDecode(response.body)['email'].toString();
+          String phone = jsonDecode(response.body)['mobno'].toString();
+          String photo = img_url + jsonDecode(response.body)['img'].toString();
 
           setState(() {
-            name_ = name;
-            location_ = location;
+            fname_ = fname;
+            sname_ = sname;
+            dob_ = dob;
             gender_ = gender;
             email_ = email;
             phone_ = phone;
-
+            photo_ = photo;
           });
         } else {
           Fluttertoast.showToast(msg: 'Not Found');

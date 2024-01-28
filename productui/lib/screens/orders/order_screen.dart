@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:productui/screens/orders/widgets/order_item.dart';
 import 'package:productui/screens/orders/widgets/order_screen_background.dart';
+
+import '../view_product/product.dart';
 // import 'package:productui/screens/nav/nav.dart';
 
 class OrderScreen extends StatelessWidget {
@@ -12,17 +15,29 @@ class OrderScreen extends StatelessWidget {
     return OrderBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        // appBar: AppBar(
-        //   leading: IconButton(
-        //     onPressed: () => Navigator.push(
-        //       context,
-        //       MaterialPageRoute(
-        //         builder: (context) => Nav(),
-        //       ),
-        //     ),
-        //     icon: SvgPicture.asset('assets/icons/button_back.svg'),
-        //   ),
-        // ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: false,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 2.0),
+            child: Text(
+              'Product Details',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(fontWeight: FontWeight.w700),
+            ),
+          ),
+          leading: IconButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductPage(),
+              ),
+            ),
+            icon: SvgPicture.asset('assets/icons/button_back.svg'),
+          ),
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(24.0),

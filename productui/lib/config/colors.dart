@@ -7,7 +7,7 @@ const k1Gray = Color(0xFF4E4E4E);
 const k1LightGray = Color(0xFFC4C4C4);
 
 const k2AccentStroke = Color(0xFF25A0B0);
-const k2MainThemeColor = Color(0xFFE1F6F4);
+const k2MainThemeColor = Color(0xFFDDFFF3);
 
 const k3GradientAccent = RadialGradient(
   colors: [Color(0xffffe1e0), k2MainThemeColor],
