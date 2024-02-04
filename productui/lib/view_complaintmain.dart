@@ -71,7 +71,10 @@ class _ViewComplaintPageState extends State<ViewComplaintPage> {
 
           title: Text(widget.title),
         ),
-        body: ListView.builder(
+        body:
+
+
+        ListView.builder(
           physics: BouncingScrollPhysics(),
           // padding: EdgeInsets.all(5.0),
           // shrinkWrap: true,

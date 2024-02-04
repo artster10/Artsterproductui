@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:productui/DeliveryBoy/view_assigned_work.dart';
 import 'package:productui/DeliveryBoy/view_delivery_prof_new.dart';
 import 'package:productui/screens/user_profile/viewprofile.dart';
 import 'package:productui/screens/view_work/view_work.dart';
@@ -223,7 +224,16 @@ class _deliveryboyHomePageState extends State<deliveryboyHomePage> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ViewSession(title: '')));
                 },
               ),
-   // 
+              ListTile(
+                leading: Icon(Icons.person_pin),
+                title: const Text(' Assigned Work  '),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AssignedWork(),)
+                  );
+                },
+              ),
+              //
 
 
 
