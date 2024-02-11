@@ -3,6 +3,7 @@ import 'package:productui/config/colors.dart';
 import 'package:productui/screens/message_detail/message_detail_screen.dart';
 import 'package:productui/screens/widgets/profile_image.dart';
 
+
 class MessageItem extends StatelessWidget {
   const MessageItem({super.key, required this.name, required this.message});
   final String name;

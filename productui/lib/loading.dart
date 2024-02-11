@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:productui/screens/nav/nav.dart';
+import 'package:productui/screens/view_product/product.dart';
 // import 'package:productui/screens/nav/nav.dart';
 import 'package:productui/user_home.dart';
 
@@ -39,7 +41,7 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => UserHomePage(title:''),
+            builder: (context) => Nav(),
           ),
         );
       }
@@ -61,7 +63,9 @@ class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
       body: Container(
         child: Center(
           child: Lottie.network(
-            'https://lottie.host/374a12b1-93d3-4e61-84fd-bc494dafa193/YH3FgeVNPM.json',height: 100,width: 100,
+            'https://lottie.host/374a12b1-93d3-4e61-84fd-bc494dafa193/YH3FgeVNPM.json',
+            height: 100,
+            width: 100,
             controller: _controller,
           ),
         ),

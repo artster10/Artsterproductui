@@ -9,6 +9,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../config/colors.dart';
+import '../nav/nav.dart';
 import '../view_product/product.dart';
 // import 'package:productui/screens/nav/nav.dart';
 
@@ -40,8 +41,6 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
-
-
     try {
       SharedPreferences sh = await SharedPreferences.getInstance();
       String urls = sh.getString('url').toString();
@@ -53,7 +52,6 @@ class _OrderScreenState extends State<OrderScreen> {
       });
       var jsondata = json.decode(data.body);
       String statuss = jsondata['status'];
-
 
       print(statuss);
       view_complaints();
@@ -95,24 +93,16 @@ class _OrderScreenState extends State<OrderScreen> {
     }
   }
 
-
-  _OrderScreenState(){
+  _OrderScreenState() {
     view_complaints();
-
   }
 
-
-
-
-  List<String> id_=[];
-  List<String> images_=[];
-  List<String> date_=[];
-  List<String> quantity_=[];
-  List<String> pname_=[];
-  List<String> price_=[];
-
-
-
+  List<String> id_ = [];
+  List<String> images_ = [];
+  List<String> date_ = [];
+  List<String> quantity_ = [];
+  List<String> pname_ = [];
+  List<String> price_ = [];
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +117,7 @@ class _OrderScreenState extends State<OrderScreen> {
           title: Padding(
             padding: const EdgeInsets.only(left: 2.0),
             child: Text(
-              'Product Details',
+              ' ',
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
@@ -138,7 +128,7 @@ class _OrderScreenState extends State<OrderScreen> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ProductPage(),
+                builder: (context) => Nav(),
               ),
             ),
             icon: SvgPicture.asset('assets/icons/button_back.svg'),
@@ -149,14 +139,13 @@ class _OrderScreenState extends State<OrderScreen> {
           foregroundColor: Colors.black,
           onPressed: () {
             _openCheckout();
-
           },
           child: Icon(Icons.add),
         ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child:  ListView.builder(
+            child: ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               // padding: EdgeInsets.all(5.0),
               shrinkWrap: true,
@@ -172,17 +161,16 @@ class _OrderScreenState extends State<OrderScreen> {
                         children: [
                           Container(
                             height: 140,
-
                             margin: EdgeInsets.only(bottom: 16.0),
-                            padding: EdgeInsets.all(16),
+                            padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                               color: kWhite.withOpacity(0.70),
                             ),
                             child: Row(
+                              
                               children: [
                                 Container(
-
                                   height: 100,
                                   padding: const EdgeInsets.all(14.0),
                                   width: size.width / 4,
@@ -199,61 +187,65 @@ class _OrderScreenState extends State<OrderScreen> {
                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-
                                       Row(
                                         children: [
                                           Container(
                                             width: size.width / 4.8,
-                                            child:
-
-
-
-                                            Text(
+                                            child: Text(
                                               pname_[index],
-                                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                                  color: kBlack, fontWeight: FontWeight.w600),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .copyWith(
+                                                      color: kBlack,
+                                                      fontWeight:
+                                                          FontWeight.w600),
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                             ),
-
-
-
                                           ),
-                                          TextButton(onPressed: () async {
+                                          TextButton(
+                                              onPressed: () async {
+                                                try {
+                                                  SharedPreferences sh =
+                                                      await SharedPreferences
+                                                          .getInstance();
+                                                  String urls = sh
+                                                      .getString('url')
+                                                      .toString();
+                                                  String url =
+                                                      '$urls/remove_cart/';
+                                                  var data = await http.post(
+                                                      Uri.parse(url),
+                                                      body: {
+                                                        "cart_id": id_[index],
+                                                      });
+                                                  var jsondata =
+                                                      json.decode(data.body);
+                                                  String statuss =
+                                                      jsondata['status'];
 
-                                            try {
-                                              SharedPreferences sh = await SharedPreferences.getInstance();
-                                              String urls = sh.getString('url').toString();
-                                              String url = '$urls/remove_cart/';
-                                              var data = await http.post(Uri.parse(url), body: {
-                                                "cart_id": id_[index],
-                                              });
-                                              var jsondata = json.decode(data.body);
-                                              String statuss = jsondata['status'];
-
-
-                                              print(statuss);
-                                              view_complaints();
-                                            } catch (e) {
-                                              print("Error ------------------- " + e.toString());
-                                              //there is error during converting file image to base64 encoding.
-                                            }
-
-                                          }, child: Text('Remove'))
+                                                  print(statuss);
+                                                  view_complaints();
+                                                } catch (e) {
+                                                  print(
+                                                      "Error ------------------- " +
+                                                          e.toString());
+                                                  //there is error during converting file image to base64 encoding.
+                                                }
+                                              },
+                                              child: Text('Remove'))
                                         ],
                                       ),
-
-
-
-
-
                                       Row(
                                         children: [
                                           Text(
-                                           "qty: "+quantity_[index],
+                                            "qty: " + quantity_[index],
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .labelLarge!
@@ -263,19 +255,23 @@ class _OrderScreenState extends State<OrderScreen> {
                                             width: 10,
                                           ),
                                           Padding(
-                                            padding: EdgeInsets.symmetric(vertical: 10),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10),
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               children: [
                                                 Align(
                                                   alignment: Alignment.topRight,
                                                   child: Text(
-                                                    "Rs:"+price_[index],
+                                                    "Rs:" + price_[index],
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .labelSmall!
-                                                        .copyWith(color: kBlack),
+                                                        .copyWith(
+                                                            color: kBlack),
                                                   ),
                                                 ),
                                               ],
@@ -286,7 +282,6 @@ class _OrderScreenState extends State<OrderScreen> {
                                     ],
                                   ),
                                 ),
-
                               ],
                             ),
                           )
@@ -295,18 +290,10 @@ class _OrderScreenState extends State<OrderScreen> {
                 );
               },
             ),
-
-
-
-
-
           ),
-
         ),
       ),
     );
-
-
   }
 
   void view_complaints() async {
@@ -316,7 +303,6 @@ class _OrderScreenState extends State<OrderScreen> {
     List<String> quantity = <String>[];
     List<String> pname = <String>[];
     List<String> price = <String>[];
-
 
     try {
       SharedPreferences sh = await SharedPreferences.getInstance();
@@ -337,11 +323,10 @@ class _OrderScreenState extends State<OrderScreen> {
       for (int i = 0; i < arr.length; i++) {
         id.add(arr[i]['id'].toString());
         date.add(arr[i]['date'].toString());
-        images.add(img_url+arr[i]['images'].toString());
+        images.add(img_url + arr[i]['images'].toString());
         pname.add(arr[i]['pname'].toString());
         price.add(arr[i]['price'].toString());
         quantity.add(arr[i]['quantity'].toString());
-
       }
 
       setState(() {
@@ -351,8 +336,6 @@ class _OrderScreenState extends State<OrderScreen> {
         quantity_ = quantity;
         price_ = price;
         pname_ = pname;
-
-
       });
 
       print(statuss);

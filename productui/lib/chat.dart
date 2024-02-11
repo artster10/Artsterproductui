@@ -52,7 +52,6 @@ class _MyChatPageState extends State<MyChatPage> {
 
   List<ChatMessage> messages = [];
 
-
   TextEditingController te_message = TextEditingController();
 
   List<String> from_id_ = <String>[];
@@ -65,9 +64,9 @@ class _MyChatPageState extends State<MyChatPage> {
     final pref = await SharedPreferences.getInstance();
     name = pref.getString("agrname").toString();
 
-    setState(() {
-      name = name;
-    });
+    // setState(() {
+    //   name = name;
+    // });
 
     List<String> from_id = <String>[];
     List<String> to_id = <String>[];
@@ -91,9 +90,7 @@ class _MyChatPageState extends State<MyChatPage> {
       var arr = jsondata["data"];
       print(arr);
 
-
       messages.clear();
-
 
       for (int i = 0; i < arr.length; i++) {
         from_id.add(arr[i]['from'].toString());
@@ -174,7 +171,7 @@ class _MyChatPageState extends State<MyChatPage> {
             itemBuilder: (context, index) {
               return Container(
                 padding:
-                EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                    EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
                 child: Align(
                   alignment: (messages[index].messageType == "receiver"
                       ? Alignment.topLeft

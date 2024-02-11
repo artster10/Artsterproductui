@@ -241,6 +241,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:productui/loading.dart';
 import 'package:productui/quantity.dart';
+import 'package:productui/screens/nav/nav.dart';
 import 'package:productui/screens/orders/widgets/order_screen_background.dart';
 import 'package:productui/screens/view_product/product.dart';
 import 'package:productui/singlequantity.dart';
@@ -337,7 +338,7 @@ class _ProductInfoState extends State<ProductInfo> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ProductPage(),
+                builder: (context) => Nav(),
               ),
             ),
             icon: SvgPicture.asset('assets/icons/button_back.svg'),
@@ -398,7 +399,6 @@ class _ProductInfoState extends State<ProductInfo> {
                           ),
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Align(
@@ -468,8 +468,10 @@ class _ProductInfoState extends State<ProductInfo> {
                     alignment: Alignment.topLeft,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => MYQuantity(title: '')));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MYQuantity(title: '')));
                       },
                       child: Icon(
                         Icons.shopping_cart_rounded,
@@ -488,10 +490,15 @@ class _ProductInfoState extends State<ProductInfo> {
                     alignment: Alignment.topLeft,
                     child: ElevatedButton(
                       onPressed: () async {
-                        SharedPreferences sh = await SharedPreferences.getInstance();
+                        SharedPreferences sh =
+                            await SharedPreferences.getInstance();
                         sh.setString("pid", id_).toString();
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => MYsingleQuantity(title: '',)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MYsingleQuantity(
+                                      title: '',
+                                    )));
                       },
                       child: Icon(
                         Icons.shopping_bag_rounded,
