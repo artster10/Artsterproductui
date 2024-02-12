@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:productui/onboarding/widgets/background.dart';
 import 'package:productui/screens/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart ';
@@ -67,140 +68,149 @@ class _MysignupPageState extends State<MysignupPage> {
       onWillPop: () async {
         return true;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              if (_selectedImage != null) ...{
-                InkWell(
-                  child: Image.file(
-                    _selectedImage!,
-                    height: 400,
-                  ),
-                  radius: 399,
-                  onTap: _checkPermissionAndChooseImage,
-                  // borderRadius: BorderRadius.all(Radius.circular(200)),
-                ),
-              } else ...{
-                // Image(image: NetworkImage(),height: 100, width: 70,fit: BoxFit.cover,),
-                InkWell(
-                  onTap: _checkPermissionAndChooseImage,
-                  child: Column(
-                    children: [
-                      Image(
-                        image: NetworkImage(
-                            'https://cdn.pixabay.com/photo/2017/11/10/05/24/select-2935439_1280.png'),
-                        height: 200,
-                        width: 200,
+      child: Background(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          // appBar: AppBar(
+          //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          //   title: Text(widget.title),
+          // ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  if (_selectedImage != null) ...{
+                    InkWell(
+                      child: Image.file(
+                        _selectedImage!,
+                        height: 400,
                       ),
-                      Text('Select Image', style: TextStyle(color: Colors.cyan))
-                    ],
+                      radius: 399,
+                      onTap: _checkPermissionAndChooseImage,
+                      // borderRadius: BorderRadius.all(Radius.circular(200)),
+                    ),
+                  } else ...{
+                    // Image(image: NetworkImage(),height: 100, width: 70,fit: BoxFit.cover,),
+                    InkWell(
+                      onTap: _checkPermissionAndChooseImage,
+                      child: Column(
+                        children: [
+                          Image(
+                            image: NetworkImage(
+                                'https://cdn.pixabay.com/photo/2017/11/10/05/24/select-2935439_1280.png'),
+                            height: 200,
+                            width: 200,
+                          ),
+                          Text('Select Image',
+                              style: TextStyle(color: Colors.cyan))
+                        ],
+                      ),
+                    ),
+                  },
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextField(
+                      controller: fnameController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          label: Text("First Name")),
+                    ),
                   ),
-                ),
-              },
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: fnameController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("First Name")),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextField(
+                      controller: snameController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          label: Text("Second Name")),
+                    ),
+                  ),
+                  RadioListTile(
+                    value: "Male",
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = "Male";
+                      });
+                    },
+                    title: Text("Male"),
+                  ),
+                  RadioListTile(
+                    value: "Female",
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = "Female";
+                      });
+                    },
+                    title: Text("Female"),
+                  ),
+                  RadioListTile(
+                    value: "Other",
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = "Other";
+                      });
+                    },
+                    title: Text("Other"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextField(
+                      controller: dateController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), label: Text("DOB")),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextField(
+                      controller: mobnoController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), label: Text("Phone")),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(), label: Text("E-mail")),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextField(
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          label: Text("Password")),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextField(
+                      controller: confirmpasswordController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          label: Text("Confirm Password")),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _send_data();
+                    },
+                    child: Text("Signup"),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text("Login"),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: snameController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("Second Name")),
-                ),
-              ),
-              RadioListTile(
-                value: "Male",
-                groupValue: gender,
-                onChanged: (value) {
-                  setState(() {
-                    gender = "Male";
-                  });
-                },
-                title: Text("Male"),
-              ),
-              RadioListTile(
-                value: "Female",
-                groupValue: gender,
-                onChanged: (value) {
-                  setState(() {
-                    gender = "Female";
-                  });
-                },
-                title: Text("Female"),
-              ),
-              RadioListTile(
-                value: "Other",
-                groupValue: gender,
-                onChanged: (value) {
-                  setState(() {
-                    gender = "Other";
-                  });
-                },
-                title: Text("Other"),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: dateController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("DOB")),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: mobnoController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("Phone")),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("E-mail")),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: passwordController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), label: Text("Password")),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: confirmpasswordController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      label: Text("Confirm Password")),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _send_data();
-                },
-                child: Text("Signup"),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text("Login"),
-              ),
-            ],
+            ),
           ),
         ),
       ),

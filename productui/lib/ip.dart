@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productui/mylogin.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -76,7 +77,7 @@ class _MyHomePageIPState extends State<MyHomePageIP> {
                 SharedPreferences Sh = await SharedPreferences.getInstance();
                 Sh.setString('url', 'http://'+ipcontroller.text+":8000/artster");
                 Sh.setString('img_url', 'http://'+ipcontroller.text+":8000");
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyLogin(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Login(),));
               }, child: Text('SEND'))
             ],
           ),

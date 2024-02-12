@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.greenAccent),
         useMaterial3: true,
       ),
       home: const FeedbackPage(title: 'Flutter Demo Home Page'),
@@ -37,14 +37,13 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
-
-  TextEditingController feedbackController=TextEditingController();
+  TextEditingController feedbackController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.greenAccent,
         title: Text(widget.title),
       ),
       body: Center(
@@ -56,16 +55,16 @@ class _FeedbackPageState extends State<FeedbackPage> {
               child: TextField(
                 controller: feedbackController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: "Feedback"),
+                    border: OutlineInputBorder(), labelText: "Feedback"),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(onPressed: () {
-                _send_data();
-              }, child: Text('Submit')),
+              child: ElevatedButton(
+                  onPressed: () {
+                    _send_data();
+                  },
+                  child: Text('Submit')),
             ),
           ],
         ),
@@ -73,11 +72,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
     );
   }
 
-  void _send_data() async{
-
-
-    String complaints=feedbackController.text;
-
+  void _send_data() async {
+    String complaints = feedbackController.text;
 
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
@@ -86,30 +82,27 @@ class _FeedbackPageState extends State<FeedbackPage> {
     final urls = Uri.parse('$url/and_feedback_post/');
     try {
       final response = await http.post(urls, body: {
-        'feedback':complaints,
-        'lid':lid,
+        'feedback': complaints,
+        'lid': lid,
       });
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
-        if (status=='ok') {
+        if (status == 'ok') {
           Fluttertoast.showToast(msg: 'Sent');
 
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => Loading(),));
-        }else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Loading(),
+              ));
+        } else {
           Fluttertoast.showToast(msg: 'Not Found');
         }
-      }
-      else {
+      } else {
         Fluttertoast.showToast(msg: 'Network Error');
       }
-    }
-    catch (e){
+    } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
     }
   }
-
-
 }
-
-
