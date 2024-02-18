@@ -47,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Padding(
             padding: const EdgeInsets.only(left: 2.0),
             child: Text(
-              'Product Details',
+              ' ',
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
@@ -108,17 +108,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 80.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Stat(title: 'Posts', value: 35),
-                    Stat(title: 'Followers', value: 1552),
-                    Stat(title: 'Follows', value: 128),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: const [
+              //       Stat(title: 'Posts', value: 35),
+              //       Stat(title: 'Followers', value: 1552),
+              //       Stat(title: 'Follows', value: 128),
+              //     ],
+              //   ),
+              // ),
               const SizedBox(height: 50.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
