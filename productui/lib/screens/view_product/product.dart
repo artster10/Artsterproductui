@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:productui/chat_artist.dart';
 import 'package:productui/product_info/product_info.dart';
 import 'package:productui/screens/home/home_screen.dart';
+import 'package:productui/screens/message/message_screen.dart';
 import 'package:productui/screens/profile/profile_screen.dart';
 import 'package:productui/screens/view_product/bg.dart';
 import 'package:productui/user_home.dart';
@@ -11,8 +13,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/colors.dart';
+import '../../user view artist.dart';
 import '../artist_profile/viewa.dart';
+import '../nav/nav.dart';
+import '../orders/order_screen.dart';
 import '../product_details/product_details.dart';
+
+
+
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -103,6 +111,32 @@ class _ProductPageState extends State<ProductPage> {
     return Background(
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: false,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              'Artster',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(fontWeight: FontWeight.w700),
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChatArtist()));
+                },
+                icon: SvgPicture.asset('assets/icons/message.svg'),
+              ),
+            ),
+          ],
+        ),
         // appBar: AppBar(
         //   automaticallyImplyLeading: false,
         //   centerTitle: false,
@@ -132,16 +166,6 @@ class _ProductPageState extends State<ProductPage> {
             children: [
               SizedBox(
                 height: 42,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Text(
-                  'Feed',
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(fontWeight: FontWeight.w700),
-                ),
               ),
 
               // SingleChildScrollView(
@@ -237,7 +261,12 @@ class _ProductPageState extends State<ProductPage> {
                                 child: Row(
                                   children: [
                                     GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
+                                        SharedPreferences sh =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        sh.setString("aid", aid_[index]);
+
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(

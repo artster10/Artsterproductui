@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:productui/DeliveryBoy/view_assigned_work.dart';
+import 'package:productui/onboarding/widgets/background.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -11,8 +12,6 @@ import 'package:http/http.dart' as http;
 // import 'dart:convert';
 
 import 'delivery_home.dart';
-
-
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -36,16 +34,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class deliveryViewProfilefull extends StatefulWidget {
   const deliveryViewProfilefull({super.key, required this.title});
-
 
   final String title;
 
   @override
-  State<deliveryViewProfilefull> createState() => _deliveryViewProfilefullState();
+  State<deliveryViewProfilefull> createState() =>
+      _deliveryViewProfilefullState();
 }
+
 class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
   @override
   void initState() {
@@ -53,8 +51,6 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
     super.initState();
     _send_data();
   }
-
-
 
   // String name='name';
   // String email='email';
@@ -67,22 +63,14 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
   // String post='post';
   // String pin='pin';
 
-
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async{
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>deliveryboyHomePage (title: '',),));
-
-        return false;
-
-      },
+    return Background(
       child: Scaffold(
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Stack(
             children: [
-
               Container(
                 margin: EdgeInsets.fromLTRB(16.0, 240.0, 16.0, 16.0),
                 child: Column(
@@ -102,13 +90,14 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                                   margin: const EdgeInsets.only(left: 110.0),
                                   child: Row(
                                     // mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         children: [
                                           Text(
                                             ' $name_',
@@ -127,10 +116,8 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                                           )
                                         ],
                                       ),
-
                                     ],
                                   )),
-
                             ],
                           ),
                         ),
@@ -139,9 +126,8 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                           width: 90,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.0),
-                              image:  DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/db.jpeg'),
+                              image: DecorationImage(
+                                  image: AssetImage('assets/images/db.jpeg'),
                                   fit: BoxFit.cover)),
                           margin: EdgeInsets.only(left: 20.0),
                         ),
@@ -154,7 +140,7 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: Column(
-                        children:  [
+                        children: [
                           ListTile(
                             title: Text("Profile Information"),
                           ),
@@ -164,9 +150,6 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                             subtitle: Text('$location_'),
                             leading: Icon(Icons.place),
                           ),
-
-
-
                           ListTile(
                             title: Text("Gender"),
                             subtitle: Text('$gender_'),
@@ -182,8 +165,6 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                             subtitle: Text(phone_),
                             leading: Icon(Icons.phone),
                           ),
-
-
                           SizedBox(
                             height: 10,
                           ),
@@ -206,11 +187,11 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   onPressed: () {
-
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>deliveryboyHomePage (title: '',),));
-
-
-
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AssignedWork(),
+                        ));
                   },
                 ),
               ),
@@ -220,7 +201,6 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
       ),
     );
   }
-
 
   String name_ = "";
   String location_ = "";
@@ -236,10 +216,7 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
     String lid = sh.getString('lid').toString();
     final urls = Uri.parse('$url/and_deliveryboy/');
     try {
-      final response = await http.post(urls, body: {
-        'lid': lid
-
-      });
+      final response = await http.post(urls, body: {'lid': lid});
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
         if (status == 'ok') {
@@ -256,7 +233,6 @@ class _deliveryViewProfilefullState extends State<deliveryViewProfilefull> {
             gender_ = gender;
             email_ = email;
             phone_ = phone;
-
           });
         } else {
           Fluttertoast.showToast(msg: 'Not Found');

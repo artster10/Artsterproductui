@@ -1,10 +1,13 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:productui/purchase_history.dart';
+import 'package:productui/screens/orders/order_screen.dart';
 import 'package:productui/screens/user_profile/userprofilenew.dart';
 import 'package:productui/screens/user_profile/viewprofile.dart';
 import 'package:productui/screens/view_product/product.dart';
 import 'package:productui/screens/view_work/view_work.dart';
+import 'package:productui/user%20view%20artist.dart';
 import 'package:productui/view_complaintmain.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +20,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 
 import 'changepassword.dart';
+import 'chat.dart';
 import 'complaint.dart';
 import 'feedback.dart';
 //
@@ -276,14 +280,39 @@ class _UserHomePageState extends State<UserHomePage> {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ProductPage()));
                 },
               ),
-   // ListTile(
-   //              leading: Icon(Icons.near_me),
-   //              title: const Text(' Nearest Parking'),
-   //              onTap: () {
-   //                Navigator.pop(context);
-   //                Navigator.push(context, MaterialPageRoute(builder: (context) => view_near_parking_full(title: "",),));
-   //              },
-   //            ),
+
+   ListTile(
+                leading: Icon(Icons.brush_rounded),
+                title: const Text(' ARTIST'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => UserViewArtistPage(title: "",),));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.work),
+                title: const Text(' Cart '),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => OrderScreen()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.work),
+                title: const Text(' Purchase History '),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PurchaseHistory()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.work),
+                title: const Text('  Chat '),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyChatApp()));
+                },
+              ),
    //
    //
    //

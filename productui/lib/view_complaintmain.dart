@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:productui/screens/nav/nav.dart';
 import 'package:productui/user_home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -20,18 +22,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
         useMaterial3: true,
       ),
-      home: const ViewComplaintPage(title: 'Profile'),
+      home: ViewComplaintPage(title: ''),
     );
   }
 }
 
 class ViewComplaintPage extends StatefulWidget {
   const ViewComplaintPage({super.key, required this.title});
-
 
   final String title;
 
@@ -47,96 +47,104 @@ class _ViewComplaintPageState extends State<ViewComplaintPage> {
     view_complaints();
   }
 
-  List<String> id_=[];
-  List<String> complaint_=[];
-  List<String> date_=[];
-  List<String> reply_=[];
-  List<String> status_=[];
+  List<String> id_ = [];
+  List<String> complaint_ = [];
+  List<String> date_ = [];
+  List<String> reply_ = [];
+  List<String> status_ = [];
 
   @override
   Widget build(BuildContext context) {
-
-
-    return WillPopScope(
-      onWillPop: () async{
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>UserHomePage (title: '',),));
-
-        return false;
-
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.teal,
-
-          title: Text(widget.title),
-        ),
-        body: ListView.builder(
-          physics: BouncingScrollPhysics(),
-          // padding: EdgeInsets.all(5.0),
-          // shrinkWrap: true,
-          itemCount: id_.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              onLongPress: () {
-                print("long press" + index.toString());
-              },
-              title: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            color: Colors.grey, //<-- SEE HERE
-                          ),
-                          borderRadius: BorderRadius.circular(20.0),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.greenAccent,
+        title: Text(widget.title),
+      ),
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   centerTitle: false,
+      //   title: Padding(
+      //     padding: const EdgeInsets.only(left: 2.0),
+      //     child: Text(
+      //       ' ',
+      //       style: Theme.of(context)
+      //           .textTheme
+      //           .bodyLarge!
+      //           .copyWith(fontWeight: FontWeight.w700),
+      //     ),
+      //   ),
+      //   leading: IconButton(
+      //     onPressed: () => Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => Nav(),
+      //       ),
+      //     ),
+      //     icon: SvgPicture.asset('assets/icons/button_back.svg'),
+      //   ),
+      // ),
+      body: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        // padding: EdgeInsets.all(5.0),
+        // shrinkWrap: true,
+        itemCount: id_.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            onLongPress: () {
+              print("long press" + index.toString());
+            },
+            title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey, //<-- SEE HERE
                         ),
-                        child: Container(
-                          height: 200,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: ListTile(
-                                            title: Text(date_[index]),
-                                            subtitle: Text(complaint_[index])),
-                                      ),
-                                      Expanded(
-                                        flex: 9,
-                                        child: ListTile(
-                                            title: Text(status_[index]),
-                                            subtitle: Text(reply_[index])),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                flex: 8,
-                              ),
-                            ],
-                          ),
-                        ),
-                        elevation: 8,
-                        margin: EdgeInsets.all(10),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                    ],
-                  )),
-            );
-          },
-        ),
+                      child: Container(
+                        height: 200,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.topLeft,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      flex: 5,
+                                      child: ListTile(
+                                          title: Text(date_[index]),
+                                          subtitle: Text(complaint_[index])),
+                                    ),
+                                    Expanded(
+                                      flex: 9,
+                                      child: ListTile(
+                                          title: Text(status_[index]),
+                                          subtitle: Text(reply_[index])),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              flex: 8,
+                            ),
+                          ],
+                        ),
+                      ),
+                      elevation: 8,
+                      margin: EdgeInsets.all(10),
+                    ),
+                  ],
+                )),
+          );
+        },
       ),
     );
   }
 
-
-
-
-void view_complaints() async {
+  void view_complaints() async {
     List<String> id = <String>[];
     List<String> date = <String>[];
     List<String> complaint = <String>[];
@@ -180,6 +188,4 @@ void view_complaints() async {
       //there is error during converting file image to base64 encoding.
     }
   }
-
-
 }

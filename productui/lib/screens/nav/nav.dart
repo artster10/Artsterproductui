@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:productui/config/colors.dart';
-import 'package:productui/screens/home/home_screen.dart';
+// import 'package:productui/screens/home/home_screen.dart';
 import 'package:productui/screens/orders/order_screen.dart';
 import 'package:productui/screens/product_videos/Product_videos.dart';
-import 'package:productui/screens/profile/profile_screen.dart';
+// import 'package:productui/screens/profile/profile_screen.dart';
 import 'package:productui/screens/widgets/custom_button.dart';
-import 'package:productui/screens/message/message_screen.dart';
+import 'package:productui/search_artist.dart';
+import 'package:productui/user%20view%20artist.dart';
+// import 'package:productui/screens/message/message_screen.dart';
+
+import '../../purchase_history.dart';
+import '../user_profile/userprofilenew.dart';
+import '../view_product/product.dart';
 
 class Nav extends StatefulWidget {
   const Nav({Key? key}) : super(key: key);
@@ -18,10 +24,10 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int _selectedIndex = 0;
   final _pages = [
-    HomeScreen(),
-    MessageScreen(),
+    ProductPage(),
     OrderScreen(),
-    ProfileScreen()
+    PurchaseHistory(),
+    UserProfile()
   ];
 
   void _changePageto(int index) {
@@ -38,13 +44,15 @@ class _NavState extends State<Nav> {
       floatingActionButton: _selectedIndex == 1
           ? null
           : CustomButton(
-              child: SvgPicture.asset('assets/icons/plus.svg'),
+              child: SvgPicture.asset(
+                'assets/icons/search.svg',
+                color: Colors.greenAccent,
+              ),
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProductVideos(),
-                    ));
+                        builder: (context) => SearchArtist()));
               },
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -81,7 +89,9 @@ class _NavState extends State<Nav> {
                   GestureDetector(
                     onTap: () => _changePageto(1),
                     child: SvgPicture.asset(
-                      'assets/icons/message.svg',
+                      'assets/icons/cart (1).svg',
+                      height: 28,
+                      width: 28,
                       color: _selectedIndex == 1 ? kSelectedTabColor : null,
                     ),
                   ),

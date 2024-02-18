@@ -234,18 +234,23 @@
 //   }
 // }
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:productui/loading.dart';
+import 'package:productui/quantity.dart';
+import 'package:productui/screens/nav/nav.dart';
 import 'package:productui/screens/orders/widgets/order_screen_background.dart';
 import 'package:productui/screens/view_product/product.dart';
+import 'package:productui/singlequantity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:video_player/video_player.dart';
 import '../config/colors.dart';
+import '../payment.dart';
 
 class ProductInfo extends StatefulWidget {
   const ProductInfo({Key? key}) : super(key: key);
@@ -255,6 +260,7 @@ class ProductInfo extends StatefulWidget {
 }
 
 class _ProductInfoState extends State<ProductInfo> {
+  String id_ = "";
   String pname_ = "";
   String pinfo_ = "";
   String price_ = "";
@@ -281,6 +287,7 @@ class _ProductInfoState extends State<ProductInfo> {
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
         if (status == 'ok') {
+          String id = jsonDecode(response.body)['id'].toString();
           String pname = jsonDecode(response.body)['pname'];
           String pinfo = jsonDecode(response.body)['pinfo'];
           String price = jsonDecode(response.body)['price'];
@@ -289,6 +296,7 @@ class _ProductInfoState extends State<ProductInfo> {
           String pvideo = img_url + jsonDecode(response.body)['pvideo'];
 
           setState(() {
+            id_ = id;
             pname_ = pname;
             pinfo_ = pinfo;
             price_ = price;
@@ -330,7 +338,7 @@ class _ProductInfoState extends State<ProductInfo> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ProductPage(),
+                builder: (context) => Nav(),
               ),
             ),
             icon: SvgPicture.asset('assets/icons/button_back.svg'),
@@ -376,26 +384,28 @@ class _ProductInfoState extends State<ProductInfo> {
                 children: [
                   Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            pname_,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall!
-                                .copyWith(fontWeight: FontWeight.w700),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              pname_,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(fontWeight: FontWeight.w900),
+                            ),
                           ),
                         ),
                       ),
-                      const Spacer(),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         child: Align(
                           alignment: Alignment.topRight,
                           child: Text(
                             '\$' + price_,
+                            maxLines: 3,
                             style: Theme.of(context)
                                 .textTheme
                                 .displaySmall!
@@ -457,7 +467,12 @@ class _ProductInfoState extends State<ProductInfo> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MYQuantity(title: '')));
+                      },
                       child: Icon(
                         Icons.shopping_cart_rounded,
                         color: Colors.black54,
@@ -474,9 +489,16 @@ class _ProductInfoState extends State<ProductInfo> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Loading()));
+                      onPressed: () async {
+                        SharedPreferences sh =
+                            await SharedPreferences.getInstance();
+                        sh.setString("pid", id_).toString();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MYsingleQuantity(
+                                      title: '',
+                                    )));
                       },
                       child: Icon(
                         Icons.shopping_bag_rounded,

@@ -5,9 +5,14 @@ import 'package:productui/screens/message/widgets/message_background.dart';
 import 'package:productui/screens/message/widgets/message_item.dart';
 import 'package:productui/screens/nav/nav.dart';
 
-class MessageScreen extends StatelessWidget {
+class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key});
 
+  @override
+  State<MessageScreen> createState() => _MessageScreenState();
+}
+
+class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
     return MessageBackground(

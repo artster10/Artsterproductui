@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:productui/config/colors.dart';
 // import 'package:productui/screens/widgets/profile_image.dart';
 
-class OrderItem extends StatelessWidget {
+class OrderItem extends StatefulWidget {
   const OrderItem(
       {super.key,
       required this.name,
@@ -11,6 +11,12 @@ class OrderItem extends StatelessWidget {
   final String name;
   final String orderStatus;
   final String price;
+
+  @override
+  State<OrderItem> createState() => _OrderItemState();
+}
+
+class _OrderItemState extends State<OrderItem> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -48,7 +54,7 @@ class OrderItem extends StatelessWidget {
                     Container(
                       width: size.width / 4.8,
                       child: Text(
-                        name,
+                        widget.name,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: kBlack, fontWeight: FontWeight.w600),
                         maxLines: 2,
@@ -56,7 +62,7 @@ class OrderItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      price,
+                      widget.price,
                       style: Theme.of(context)
                           .textTheme
                           .labelLarge!
@@ -77,7 +83,7 @@ class OrderItem extends StatelessWidget {
                     Align(
                       alignment: Alignment.topRight,
                       child: Text(
-                        orderStatus,
+                        widget.orderStatus,
                         style: Theme.of(context)
                             .textTheme
                             .labelSmall!

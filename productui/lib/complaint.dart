@@ -45,7 +45,7 @@ class _ChangePasswordState extends State<MyComplaint> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.greenAccent,
         title: Text(widget.title),
       ),
       body: Center(
