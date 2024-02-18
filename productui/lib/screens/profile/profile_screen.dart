@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:productui/config/colors.dart';
+import 'package:productui/screens/nav/nav.dart';
 import 'package:productui/screens/profile/widgets/stat.dart';
 import 'package:productui/screens/profile/widgets/profile_background.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -58,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => UserHomePage(title: '',),
+                builder: (context) => Nav(),
               ),
             ),
             icon: SvgPicture.asset('assets/icons/button_back.svg'),
@@ -285,7 +286,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 // String confirmpassword_ = "";
   String img_ = "";
 
-  void _send_data() async {
+  void _send_data() async
+  {
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
     String lid = sh.getString('lid').toString();

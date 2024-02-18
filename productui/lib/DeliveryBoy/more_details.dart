@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:productui/DeliveryBoy/view_assigned_work.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:productui/screens/orders/widgets/order_item.dart';
@@ -28,13 +29,10 @@ class _MoreDetailsState extends State<MoreDetails> {
     view_complaints();
   }
   List<String> id_=[];
-  List<String> pname_=[];
-  List<String> orderid_=[];
+  List<String> fname_=[];
+  List<String> status_=[];
 
   List<String> date_=[];
-  List<String> quantity_=[];
-  List<String> img_=[];
-  List<String> price_=[];
 
 
 
@@ -103,7 +101,7 @@ class _MoreDetailsState extends State<MoreDetails> {
                           //   ),
                           // ),
                           Container(
-                            height: 140,
+                            height: 180,
 
                             margin: EdgeInsets.only(bottom: 16.0),
                             padding: EdgeInsets.all(16),
@@ -134,7 +132,7 @@ class _MoreDetailsState extends State<MoreDetails> {
 
 
                                     Text(
-                                      pname_[index],
+                                      fname_[index],
                                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                                           color: kBlack, fontWeight: FontWeight.w600),
                                       maxLines: 2,
@@ -158,7 +156,7 @@ class _MoreDetailsState extends State<MoreDetails> {
 
                                   children: [
                                     Text(
-                                      quantity_[index],
+                                      status_[index],
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelLarge!
@@ -176,13 +174,14 @@ class _MoreDetailsState extends State<MoreDetails> {
                                           Align(
                                             alignment: Alignment.bottomLeft,
                                             child: Text(
-                                              price_[index],
+                                              date_[index],
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelSmall!
                                                   .copyWith(color: kBlack),
                                             ),
                                           ),
+
                                         ],
                                       ),
                                     )
@@ -211,9 +210,9 @@ class _MoreDetailsState extends State<MoreDetails> {
   void view_complaints() async {
     List<String> id = <String>[];
     List<String> date = <String>[];
-    List<String> pname = <String>[];
-    List<String> price = <String>[];
-    List<String> orderid = <String>[];
+    List<String> fname = <String>[];
+    List<String>  status= <String>[];
+
 
     // List<String> img = <String>[];
     List<String> quantity = <String>[];
@@ -222,10 +221,12 @@ class _MoreDetailsState extends State<MoreDetails> {
     try {
       SharedPreferences sh = await SharedPreferences.getInstance();
       String urls = sh.getString('url').toString();
-      String url = '$urls/more_assigned/';
+      String url = '$urls/delivery_status/';
+      String lid = sh.getString("lid").toString();
       String pid = sh.getString("pid").toString();
-      String img_url = sh.getString("img_url").toString();
+      // String img_url = sh.getString("img_url").toString();
       var data = await http.post(Uri.parse(url), body: {
+        "lid": lid,
         "pid": pid,
       });
       var jsondata = json.decode(data.body);
@@ -237,12 +238,10 @@ class _MoreDetailsState extends State<MoreDetails> {
 
       for (int i = 0; i < arr.length; i++) {
         id.add(arr[i]['id'].toString());
-        orderid.add(arr[i]['orderid'].toString());
-
         date.add(arr[i]['date'].toString());
-        pname.add(arr[i]['fname'].toString());
-        price.add(arr[i]['sname'].toString());
-        quantity.add(arr[i]['quantity'].toString());
+        fname.add(arr[i]['fname'].toString());
+        status.add(arr[i]['status'].toString());
+
         // img.add(img_url+arr[i]['img'].toString());
 
 
@@ -251,10 +250,9 @@ class _MoreDetailsState extends State<MoreDetails> {
       setState(() {
         id_ = id;
         date_ = date;
-        pname_ = pname;
-        quantity_ = quantity;
-        price_ = price;
-        orderid_ = orderid;
+        fname_ = fname;
+        status_ = status;
+
 
 
 
@@ -266,4 +264,6 @@ class _MoreDetailsState extends State<MoreDetails> {
       //there is error during converting file image to base64 encoding.
     }
   }
+
+
 }
