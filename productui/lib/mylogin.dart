@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productui/DeliveryBoy/view_assigned_work.dart';
 import 'package:productui/screens/view_product/bg.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -145,9 +146,7 @@ class _LoginState extends State<Login> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => deliveryboyHomePage(
-                    title: 'Delivery Home',
-                  ),
+                  builder: (context) => AssignedWork(),
                 ));
           }
         } else {
