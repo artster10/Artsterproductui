@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:productui/purchase_sub.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 import 'package:productui/screens/orders/widgets/order_item.dart';
@@ -38,6 +39,11 @@ class _AssignedWorkState extends State<AssignedWork> {
   List<String> date_=[];
   List<String> mobno_=[];
   List<String> amount_=[];
+  List<String> afname_=[];
+  List<String> asname_=[];
+  List<String> amobno_=[];
+  List<String> email_=[];
+
 
 
 
@@ -132,16 +138,9 @@ class _AssignedWorkState extends State<AssignedWork> {
 
 
 
-                                    TextButton(onPressed: () async {
-
-
-                                      SharedPreferences Sh = await SharedPreferences.getInstance();
-                                      Sh.setString('pid', id_[index]);
-
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => MoreDetails(),));
-
-
-                                    }, child:Text('More')),
+                                    TextButton(onPressed: (){
+                                      _send_data();
+                                    }, child: Text("Delivered"))
 
 
                                   ],
@@ -155,7 +154,7 @@ class _AssignedWorkState extends State<AssignedWork> {
 
                                   children: [
                                     Text(
-                                      sname_[index],
+                                      afname_[index],
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelLarge!
@@ -214,6 +213,11 @@ class _AssignedWorkState extends State<AssignedWork> {
     List<String> amount = <String>[];
     List<String> mobno = <String>[];
 
+    List<String> afname =<String>[];
+    List<String> asname =<String>[];
+    List<String> email =<String>[];
+    List<String> amobno =<String>[];
+
 
     try {
       SharedPreferences sh = await SharedPreferences.getInstance();
@@ -238,6 +242,10 @@ class _AssignedWorkState extends State<AssignedWork> {
         sname.add(arr[i]['sname'].toString());
         amount.add(arr[i]['amount'].toString());
         mobno.add(arr[i]['mobno'].toString());
+        afname.add(arr[i]['afname'].toString());
+        asname.add(arr[i]['asname'].toString());
+        amobno.add(arr[i]['amobno'].toString());
+        email.add(arr[i]['email'].toString());
 
 
       }
@@ -249,6 +257,10 @@ class _AssignedWorkState extends State<AssignedWork> {
         sname_ = sname;
         amount_ = amount;
         mobno_ = mobno;
+        afname_=afname;
+        asname_=asname;
+        amobno_=amobno;
+        email_=email;
 
 
       });
@@ -259,4 +271,41 @@ class _AssignedWorkState extends State<AssignedWork> {
       //there is error during converting file image to base64 encoding.
     }
   }
+  void _send_data() async{
+
+
+    // String complaints=complaintCOntroller.text;
+
+
+
+    SharedPreferences sh = await SharedPreferences.getInstance();
+    String url = sh.getString('url').toString();
+    String lid = sh.getString('lid').toString();
+
+    final urls = Uri.parse('$url/update_status/');
+    try {
+      final response = await http.post(urls, body: {
+        // 'comp':complaints,
+        'lid':lid,
+      });
+      if (response.statusCode == 200) {
+        String status = jsonDecode(response.body)['status'];
+        if (status=='ok') {
+          Fluttertoast.showToast(msg: 'Sent');
+
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => MoreDetails(),));
+        }else {
+          Fluttertoast.showToast(msg: 'Not Found');
+        }
+      }
+      else {
+        Fluttertoast.showToast(msg: 'Network Error');
+      }
+    }
+    catch (e){
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
+
 }

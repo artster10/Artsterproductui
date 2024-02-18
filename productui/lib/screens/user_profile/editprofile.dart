@@ -59,7 +59,8 @@ class _MyEditPageState extends State<MyEditPage> {
   TextEditingController emailController = new TextEditingController();
 
 
-  void _get_data() async{
+  void _get_data() async
+  {
 
 
 
@@ -83,12 +84,14 @@ class _MyEditPageState extends State<MyEditPage> {
           String gender=jsonDecode(response.body)['gen'].toString();
           String email=jsonDecode(response.body)['email'].toString();
           String mobno=jsonDecode(response.body)['mobno'].toString();
-          String photo = img_url + jsonDecode(response.body)['img'];
+          String photo_ = img_url + jsonDecode(response.body)['img'];
           print(photo+"helloo");
+          // String photo=jsonDecode(response.body)['photo'];
+
 
           setState(() {
             gender = gender;
-            photo = photo;
+            photo = photo_;
           });
           // String photo=jsonDecode(response.body)['fileField'];
 
@@ -146,7 +149,7 @@ class _MyEditPageState extends State<MyEditPage> {
                   child:Column(
                     children: [
                       Image(image: NetworkImage(photo),height: 200,width: 200,),
-                      Text('Select Image',style: TextStyle(color: Colors.cyan))
+                      Text("select photo",style: TextStyle(color: Colors.cyan))
                     ],
                   ),
                 ),
@@ -204,7 +207,8 @@ class _MyEditPageState extends State<MyEditPage> {
       ),
     );
   }
-  void _send_data() async{
+  void _send_data() async
+  {
 
 
 
