@@ -27,11 +27,9 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   String _selectedTab = 'photos';
 
-
   _changeTab(String tab) {
     setState(() => _selectedTab = tab);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +106,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 lname_,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              const SizedBox(height: 80.0),
+              const SizedBox(height: 40.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Products',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      // Icon(
+                      //   Icons.line_weight,
+                      //   size: 60,
+                      // )
+                    ],
+                  ),
+                ),
+              )
               // Padding(
               //   padding: const EdgeInsets.symmetric(horizontal: 50.0),
               //   child: Row(
@@ -120,100 +139,100 @@ class _ProfileScreenState extends State<ProfileScreen> {
               //     ],
               //   ),
               // ),
-              const SizedBox(height: 50.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: () => _changeTab('photos'),
-                    child: SvgPicture.asset(
-                      'assets/icons/Button-photos.svg',
-                      color: _selectedTab == 'photos' ? k2AccentStroke : null,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => _changeTab('saved'),
-                    child: SvgPicture.asset(
-                      'assets/icons/Button-saved.svg',
-                      color: _selectedTab == 'saved' ? k2AccentStroke : null,
-                    ),
-                  ),
-                ],
-              ),
-          Padding(
-            padding: const EdgeInsets.all(13.0),
-            child: MasonryGridView.count(
-              crossAxisCount: 2,
-              itemCount: id_.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
-              itemBuilder: (BuildContext context,int index) {
-                return  GestureDetector(
-                  onTap: () async {
-                    SharedPreferences sh =
-                    await SharedPreferences.getInstance();
-                    sh.setString("pid", id_[index]);
-                    sh.setString("aid",sh.getString("aid").toString());
-                    // sh.setString("name", pname_[index]);
-                    // sh.setString("description", pinfo_[index]);
-                    // sh.setString("price", price_[index]);
-                    // sh.setString("video", video_[index]);
+              ,
+              const SizedBox(height: 20.0),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     GestureDetector(
+              //       onTap: () => _changeTab('photos'),
+              //       child: SvgPicture.asset(
+              //         'assets/icons/Button-photos.svg',
+              //         color: _selectedTab == 'photos' ? k2AccentStroke : null,
+              //       ),
+              //     ),
+              //     GestureDetector(
+              //       onTap: () => _changeTab('saved'),
+              //       child: SvgPicture.asset(
+              //         'assets/icons/Button-saved.svg',
+              //         color: _selectedTab == 'saved' ? k2AccentStroke : null,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: MasonryGridView.count(
+                  crossAxisCount: 2,
+                  itemCount: id_.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () async {
+                        SharedPreferences sh =
+                            await SharedPreferences.getInstance();
+                        sh.setString("pid", id_[index]);
+                        sh.setString("aid", sh.getString("aid").toString());
+                        // sh.setString("name", pname_[index]);
+                        // sh.setString("description", pinfo_[index]);
+                        // sh.setString("price", price_[index]);
+                        // sh.setString("video", video_[index]);
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProductInfo(),
-                        ));
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 24.0,
-                      vertical: 32.0,
-                    ),
-                    padding: const EdgeInsets.all(14.0),
-                    height: size.height * 0.40,
-                    width: size.width,
-                    decoration: BoxDecoration(
-                      // color: Colors.red,
-                      borderRadius: BorderRadius.circular(20.0),
-                      image: DecorationImage(
-                        image: NetworkImage(images_[index]),
-                        fit: BoxFit.cover,
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductInfo(),
+                            ));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 5.0,
+                          vertical: 5.0,
+                        ),
+                        padding: const EdgeInsets.all(14.0),
+                        height: size.height * 0.40,
+                        width: size.width,
+                        decoration: BoxDecoration(
+                          // color: Colors.red,
+                          borderRadius: BorderRadius.circular(20.0),
+                          image: DecorationImage(
+                            image: NetworkImage(images_[index]),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            const Spacer(),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            //   children: [
+                            //     _buildPostStat(
+                            //       context: context,
+                            //       iconPath: 'assets/icons/favorite_border.svg',
+                            //       value: '5.2K',
+                            //     ),
+                            //     _buildPostStat(
+                            //       context: context,
+                            //       iconPath: 'assets/icons/favorite_border.svg',
+                            //       value: '1.1K',
+                            //     ),
+                            //     _buildPostStat(
+                            //       context: context,
+                            //       iconPath: 'assets/icons/favorite_border.svg',
+                            //       value: '5.2K',
+                            //     ),
+                            //   ],
+                            // )
+                          ],
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-
-                        const Spacer(),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        //   children: [
-                        //     _buildPostStat(
-                        //       context: context,
-                        //       iconPath: 'assets/icons/favorite_border.svg',
-                        //       value: '5.2K',
-                        //     ),
-                        //     _buildPostStat(
-                        //       context: context,
-                        //       iconPath: 'assets/icons/favorite_border.svg',
-                        //       value: '1.1K',
-                        //     ),
-                        //     _buildPostStat(
-                        //       context: context,
-                        //       iconPath: 'assets/icons/favorite_border.svg',
-                        //       value: '5.2K',
-                        //     ),
-                        //   ],
-                        // )
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          )
+                    );
+                  },
+                ),
+              )
 
               // we'll use flutter_staggered_grid_view package here:
               // Padding(
@@ -276,6 +295,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
   String fname_ = "";
   String lname_ = "";
   String category_ = "";
@@ -286,8 +306,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 // String confirmpassword_ = "";
   String img_ = "";
 
-  void _send_data() async
-  {
+  void _send_data() async {
     SharedPreferences sh = await SharedPreferences.getInstance();
     String url = sh.getString('url').toString();
     String lid = sh.getString('lid').toString();
@@ -296,11 +315,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final urls = Uri.parse('$url/view_profile_artist/');
     try {
-      final response = await http.post(urls, body: {
-        'lid': lid,
-        'aid':aid
-
-      });
+      final response = await http.post(urls, body: {'lid': lid, 'aid': aid});
       if (response.statusCode == 200) {
         String status = jsonDecode(response.body)['status'];
         if (status == 'ok') {
@@ -340,8 +355,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   List<String> firstname_ = <String>[];
   List<String> secondname_ = <String>[];
 
-
-
   Future<void> view_notification() async {
     List<String> id = <String>[];
     List<String> pname = <String>[];
@@ -359,9 +372,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       String url = '$urls/and_view_product_artist/';
 
       var data = await http.post(Uri.parse(url), body: {
-
-        'aid':aid,
-
+        'aid': aid,
       });
       var jsondata = json.decode(data.body);
       String statuss = jsondata['status'];
@@ -376,7 +387,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         pinfo.add(arr[i]['pinfo']);
         price.add(arr[i]['price']);
         images.add(sh.getString('img_url').toString() + arr[i]['images']);
-
       }
 
       setState(() {
@@ -388,7 +398,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         price_ = price;
         firstname_ = firstname;
         secondname_ = secondname;
-
       });
 
       print(statuss);
@@ -397,7 +406,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       //there is error during converting file image to base64 encoding.
     }
   }
-
 }
 
 class ProfileImageClipper extends CustomClipper<Path> {
@@ -423,9 +431,4 @@ class ProfileImageClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-
-
 }
-
-
-
